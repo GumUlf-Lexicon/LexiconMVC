@@ -1,0 +1,106 @@
+﻿.bold{
+	font-weight: bold;
+}
+
+
+body {
+	font-family: sans-serif;
+	color: black;
+	background-color: floralwhite;
+	width: 1024px;
+	margin: 25px auto;
+	border: 5px solid black;
+}
+
+.logo-image {
+	height: 40px;
+	width: auto;
+	border: 0;
+	padding: 0;
+	margin: 15px;
+}
+
+
+header {
+	grid-area: header;
+	width: 100%;
+	padding: 20px 0px 0px 0px;
+	margin: 0px;
+	display: inline-grid;
+	grid-template-columns: 30% 40% 30%;
+	border-bottom: 2px solid black;
+}
+
+header h1 {
+	padding: 0px 0px 10px 20px;
+}
+
+header a {
+	display: block;
+	color: firebrick;
+	text-decoration: none;
+	font-weight: bolder;
+}
+
+header > a {
+	font-size: 20px;
+	text-align: right;
+	border: none;
+	padding-top: 5px;
+	padding-right: 25px;
+}
+
+nav {
+	padding-bottom: 0px;
+	padding-top: 13px;
+	margin-bottom: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+nav ul {
+	float: left;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+nav li {
+	float: left;
+	background-color: cornsilk;
+	border-width: 2px 2px 2px 2px;
+	border-color: black;
+	border-style: solid;
+	border-radius: 10px;
+	margin: 10px;
+}
+
+nav a {
+	padding: 8px;
+}
+
+nav a:hover {
+	background-color: bisque;
+	border-radius: 10px;
+}
+
+main{
+	padding: 15px;
+}
+
+footer{
+	padding: 15px;
+	border-top: 1px solid;
+	border-top-color: black;
+	align-content: center;
+	text-align: center;
+}
+
+.project-list{
+	list-style: none;
+}
+
+.project-item{
+	margin: 2px;
+}
