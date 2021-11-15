@@ -5,9 +5,6 @@
 <h1>Guessing game</h1>
 
 
-<div>
-	Guess a number between 1 and 100.
-</div>
 
 
 
@@ -17,17 +14,22 @@
 	{
 		<div class="guessResult">@ViewBag.guessResultString</div>
 	}
-}
-@{
-	// Don't print out the form i the player has won
-	if(ViewBag.playerWon != 1)
+
+	if(!(ViewBag.newGame is null))
 	{
-		<form asp-controller="Home" asp-action="GuessingGame" method="post">
-			<label class="bold">Your guess: </label>
-			<input type="text" name="playerGuess" />
-			<input type="submit" value="Guess!" />
-		</form>
+		<div class="guessResult">@ViewBag.newGame</div>
 	}
+
 }
+
+<form asp-controller="Home" asp-action="GuessingGame" method="post">
+	<div>
+		Guess a number between 1 and 100.
+	</div>
+	<label class="bold">Your guess: </label>
+	<input type="text" name="playerGuess" />
+	<input type="submit" value="Guess!" />
+</form>
+
 
 <div><a asp-controller="Home" asp-action="GuessingGame">Restart the game</a> </div>

@@ -34,19 +34,20 @@ namespace LexiconMVC.Controllers
 			HttpContext.Session.SetInt32("secretNumber", new Random().Next(1, 101));
 
 			// Clearing to be safe
-			ViewBag.playerWon = 0;
 			ViewBag.guessResultString = null;
+			ViewBag.newGame = null;
+
 			return View();
 		}
 
 		[HttpPost]
 		public IActionResult GuessingGame(string playerGuess)
 		{
-			// Recovering the secret number to be able to se if player guess right
-			int secretNumber = HttpContext.Session.GetInt32("secretNumber") ?? 0;
+			// This is not a new game any more
+			ViewBag.newGame = null;
 
-			// 0 = player has not won, 1 = player has won
-			ViewBag.playerWon = 0;
+			// We ned the secret number to be able to see if player guess right
+			int secretNumber = HttpContext.Session.GetInt32("secretNumber") ?? 0;
 
 			if(!int.TryParse(playerGuess, out int guess))
 			{
@@ -63,7 +64,8 @@ namespace LexiconMVC.Controllers
 				// Just check if the secret number is still valid
 				// Maybe the player cleard the cookies, or the
 				// session timed out.
-				ViewBag.guessResultString = "The secret number was lost, a new number is generated.";
+				ViewBag.guessResultString = "The secret number was lost.";
+				ViewBag.newGame = $"A new secret number has been generated!";
 
 				// As we don't have a valid secret number, make a new one
 				HttpContext.Session.SetInt32("secretNumber", new Random().Next(1, 101));
@@ -78,10 +80,12 @@ namespace LexiconMVC.Controllers
 			}
 			else if(guess == secretNumber)
 			{
-				ViewBag.guessResultString = $"Congratulations!!! You guessed the right number ({secretNumber})!";
+				ViewBag.guessResultString = $"Congratulations!!! You guessed the right number ({secretNumber}).";
+				ViewBag.newGame = $"A new secret number has been generated!";
 
-				// 1 = player won
-				ViewBag.playerWon = 1;
+				// Start a new game
+				HttpContext.Session.SetInt32("secretNumber", new Random().Next(1, 101));
+
 			}
 			else
 			{
