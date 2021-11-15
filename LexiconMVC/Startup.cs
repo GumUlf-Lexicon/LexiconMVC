@@ -16,7 +16,19 @@ namespace LexiconMVC
 		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		public void ConfigureServices(IServiceCollection services)
 		{
+
+			services.AddDistributedMemoryCache();
+
+			services.AddSession(options =>
+			{
+				options.IdleTimeout = TimeSpan.FromHours(1);
+				options.Cookie.HttpOnly = true;
+				options.Cookie.IsEssential = true;
+			});
+
+
 			services.AddMvc();
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,12 +43,20 @@ namespace LexiconMVC
 
 			app.UseRouting();
 
+			app.UseSession();
+
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllerRoute(
 					name: "fevercheck",
-					pattern: "FeverCheck/{temp?}",
+					pattern: "FeverCheck",
 					defaults: new { controller = "Doctor", action = "FeverCheck" }
+				);
+
+				endpoints.MapControllerRoute(
+					name: "guessingGame",
+					pattern: "/GuessingGame",
+					defaults: new { controller = "Home", action = "GuessingGame" }
 				);
 
 				endpoints.MapControllerRoute(
