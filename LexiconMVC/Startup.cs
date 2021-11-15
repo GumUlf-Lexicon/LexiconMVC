@@ -34,6 +34,12 @@ namespace LexiconMVC
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllerRoute(
+					name: "fevercheck",
+					pattern: "FeverCheck/{temp?}",
+					defaults: new { controller = "Doctor", action = "FeverCheck" }
+				);
+
+				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}"
 				);

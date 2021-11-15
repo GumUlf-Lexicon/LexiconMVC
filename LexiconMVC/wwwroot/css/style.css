@@ -2,7 +2,6 @@
 	font-weight: bold;
 }
 
-
 body {
 	font-family: sans-serif;
 	color: black;
@@ -12,27 +11,31 @@ body {
 	border: 5px solid black;
 }
 
-.logo-image {
-	height: 40px;
-	width: auto;
-	border: 0;
-	padding: 0;
-	margin: 15px;
-}
-
-
 header {
 	grid-area: header;
-	width: 100%;
-	padding: 20px 0px 0px 0px;
-	margin: 0px;
+	width: 1024px;
+	padding: 5px 0;
+	margin: 0;
 	display: inline-grid;
-	grid-template-columns: 30% 40% 30%;
+	grid-template-columns: 195px auto;
 	border-bottom: 2px solid black;
 }
 
-header h1 {
-	padding: 0px 0px 10px 20px;
+.logo-box{
+	width: 150px;
+	margin: 15px 15px 15px 30px;
+	border: 0;
+	padding: 0;
+
+}
+
+.logo-image {
+	height: auto;
+	width: 144px;
+	border: 0;
+	padding: 0;
+	border: 3px solid black;
+	border-radius: 15px;
 }
 
 header a {
@@ -52,7 +55,7 @@ header > a {
 
 nav {
 	padding-bottom: 0px;
-	padding-top: 13px;
+	padding-top: 20px;
 	margin-bottom: 0px;
 	margin-left: auto;
 	margin-right: auto;
@@ -73,7 +76,7 @@ nav li {
 	border-color: black;
 	border-style: solid;
 	border-radius: 10px;
-	margin: 10px;
+	margin: 2px;
 }
 
 nav a {
