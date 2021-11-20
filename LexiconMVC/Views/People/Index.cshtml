@@ -2,4 +2,32 @@
 	ViewData["Title"] = "People";
 }
 
+@using LexiconMVC.Models
+@model PeopleViewModel
+
 <h1>People Index</h1>
+
+
+@if(!(ViewBag.modelErrors is null))
+{
+	foreach(string error in ViewBag.modelErrors)
+	{
+		<div>Error: @error</div>
+	}
+}
+
+<h3>Add person</h3>
+<partial name="_partialCreatePersonForm" model=Model.Cpvm />
+
+<h3>Filter list</h3>
+<form asp-controller="People" asp-action="FilterPersons" method="post">
+	<div>
+		<label class="bold">Filter: </label>
+		<input type="text" value="@Model.SearchPhrase" name="filtersString" />
+		<input type="submit" value="Filter" />
+	</div>
+</form> 
+
+
+<h3>List of persons</h3>
+<partial name="_partialPersonTable" model=Model />

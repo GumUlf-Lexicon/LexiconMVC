@@ -1,0 +1,37 @@
+﻿@using LexiconMVC.Models
+@model CreatePersonViewModel
+
+@using(Html.BeginForm("CreatePerson", "People", FormMethod.Post))
+{
+	<table class="create-person-table">
+		<tr>
+			<td>
+				<label class="bold">
+					Name: 
+				</label>
+			</td>
+			<td>@Html.TextBoxFor(m => m.Name)</td>
+		</tr>
+		<tr>
+			<td>
+				<label class="bold">
+					Phone number:
+				</label>
+			</td>
+			<td>@Html.TextBoxFor(m => m.PhoneNumber)</td>
+		</tr>
+		<tr>
+			<td>
+				<label class="bold">
+					City:	
+				</label>
+			</td>
+			<td>@Html.TextBoxFor(m => m.City)</td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="submit" value="Crate Person" /></td>
+		</tr>
+
+	</table>
+
+}
