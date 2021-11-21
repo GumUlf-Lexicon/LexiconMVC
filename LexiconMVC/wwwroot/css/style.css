@@ -1,4 +1,24 @@
-﻿.bold {
+﻿.logo-image {
+	background-color: white;
+	height: 2.3em;
+	width: auto;
+	padding: 0.1em;
+	margin: 0 0.2em 0em 1em;
+	border: 0.15em solid black;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	padding-top: 0.8em;
+}
+
+footer {
+	margin-top: 2em;
+	padding-top: 1em;
+}
+
+
+/*
+.bold {
 	font-weight: bold;
 }
 
@@ -28,14 +48,6 @@ header {
 	padding: 0;
 }
 
-.logo-image {
-	height: auto;
-	width: 144px;
-	border: 0;
-	padding: 0;
-	border: 3px solid black;
-	border-radius: 15px;
-}
 
 header a {
 	display: block;
@@ -91,13 +103,6 @@ main {
 	padding: 15px;
 }
 
-footer {
-	padding: 15px;
-	border-top: 1px solid;
-	border-top-color: black;
-	align-content: center;
-	text-align: center;
-}
 
 .project-list {
 	list-style: none;
@@ -150,3 +155,4 @@ table.person-table a:hover {
 	color: darkred;
 }
 
+*/

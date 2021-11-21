@@ -45,34 +45,21 @@ namespace LexiconMVC.Controllers
 				pwm.People.Add(new Person(createPersonVM.Name, createPersonVM.PhoneNumber, createPersonVM.City));
 				ModelState.Clear();
 			}
-			else
-			{
-				var modelErrors = new List<string>();
-				foreach(var modelState in ModelState.Values)
-				{
-					foreach(var modelError in modelState.Errors)
-					{
-						modelErrors.Add(modelError.ErrorMessage);
-					}
-				}
 
-				ViewBag.modelErrors = modelErrors;
-
-			}
 			return View("Index", pwm);
 		}
 
 
 		[HttpPost]
-		public IActionResult FilterPersons(string filtersString)
+		public IActionResult FilterPersons(string searchPhrase)
 		{
-			if(string.IsNullOrWhiteSpace(filtersString))
+			if(string.IsNullOrWhiteSpace(searchPhrase))
 			{
 				pwm.SearchPhrase = null;
 			}
 			else
 			{
-				pwm.SearchPhrase = filtersString;
+				pwm.SearchPhrase = searchPhrase;
 			}
 
 			return View("Index", pwm);

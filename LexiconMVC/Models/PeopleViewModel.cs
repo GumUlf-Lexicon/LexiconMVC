@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,8 @@ namespace LexiconMVC.Models
 		public CreatePersonViewModel Cpvm { get; set; } = new CreatePersonViewModel();
 
 		public List<Person> People { get; } = new List<Person>();
+
+		[DisplayName("Filter: ")]
 		public string SearchPhrase { get; set; } = null;
 
 		public PeopleViewModel()

@@ -14,21 +14,21 @@ namespace LexiconMVC.Models
 	public class CreatePersonViewModel
 	{
 		[DataType(DataType.Text)]
-		[DisplayName("Name")]
+		[DisplayName("Name: ")]
 		[Required(ErrorMessage = "You have to enter the person's name!")]
 		[MinLength(3, ErrorMessage = "The name has to be at least three characters long!")]
 		[MaxLength(128, ErrorMessage = "The name cannot be longer than 128 characters long!")]
 		public string Name { get; set; }
 
 		[DataType(DataType.PhoneNumber)]
-		[DisplayName("Phone number")]
+		[DisplayName("Phone no: ")]
 		[Required(ErrorMessage = "You have to enter the person's phone number!")]
 		[MinLength(3, ErrorMessage = "The phone number has to have least three characters!")]
-		[MaxLength(128, ErrorMessage = "The phone number cannot be longer than 128 characters!")]
+		[MaxLength(32, ErrorMessage = "The phone number cannot be longer than 128 characters!")]
 		public string PhoneNumber { get; set; }
 
 		[DataType(DataType.Text)]
-		[DisplayName("City")]
+		[DisplayName("City: ")]
 		[Required(ErrorMessage ="You have to enter the person's city!")]
 		[MinLength(3, ErrorMessage = "The city name has to have at least one character!")]
 		[MaxLength(128, ErrorMessage = "The city name cannot have more than 128 characters!")]

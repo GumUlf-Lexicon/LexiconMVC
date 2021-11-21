@@ -1,8 +1,8 @@
-﻿@using LexiconMVC.Models
-@model PeopleViewModel
+﻿@model PeopleViewModel
 
-<table class="person-table">
-	<tr>
+
+<table class="table table-striped">
+	<tr class="border-bottom">
 		<th>@Html.DisplayNameFor(m => Model.People.FirstOrDefault().Name)</th>
 		<th>@Html.DisplayNameFor(m => Model.People.FirstOrDefault().PhoneNumber)</th>
 		<th>@Html.DisplayNameFor(m => Model.People.FirstOrDefault().City)</th>
@@ -20,7 +20,7 @@
 					<td>@Html.DisplayFor(mi => person.Name)</td>
 					<td>@Html.DisplayFor(mi => person.PhoneNumber)</td>
 					<td>@Html.DisplayFor(mi => person.City)</td>
-					<td><a asp-controller="People" asp-action="RemovePerson" asp-route-personId="@person.PersonId">Delete</a></td>
+					<td><a asp-controller="People" asp-action="RemovePerson" asp-route-personId="@person.PersonId" class="btn btn-outline-danger btn-sm">Delete</a></td>
 				</tr>
 			}
 		}
