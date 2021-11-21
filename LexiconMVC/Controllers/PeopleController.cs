@@ -38,12 +38,12 @@ namespace LexiconMVC.Controllers
 		[HttpPost]
 		public IActionResult CreatePerson(CreatePersonViewModel createPersonVM)
 		{
-			ViewBag.modelErrors = null;
 
 			if(ModelState.IsValid)
 			{
 				pwm.People.Add(new Person(createPersonVM.Name, createPersonVM.PhoneNumber, createPersonVM.City));
 				ModelState.Clear();
+				pwm.SearchPhrase = null;
 			}
 
 			return View("Index", pwm);
