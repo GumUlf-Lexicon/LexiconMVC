@@ -11,6 +11,8 @@ namespace LexiconMVC.Controllers
 	{
 		public IActionResult Index()
 		{
+			// If this is the first time running, persons are added to
+			// the people register.
 			if(!PeopleRegister.HasBeenPopulated)
 			{
 				PeopleRegister.HasBeenPopulated = new PeopleRegister().Populate();
@@ -19,6 +21,7 @@ namespace LexiconMVC.Controllers
 			return View();
 		}
 
+		// Get a list of persons in the people register
 		[HttpGet]
 		public IActionResult GetPersons()
 		{
@@ -28,6 +31,8 @@ namespace LexiconMVC.Controllers
 			return PartialView("_partialPersonList", personList);
 		}
 
+
+		// Get a specific person in the people register
 		[HttpPost]
 		public IActionResult GetPersonById(int personId)
 		{
@@ -43,6 +48,7 @@ namespace LexiconMVC.Controllers
 		}
 
 
+		// Remove a specific person from the register
 		[HttpPost]
 		public IActionResult RemovePersonById(int personId)
 		{
@@ -54,11 +60,14 @@ namespace LexiconMVC.Controllers
 			{
 				if(people.Remove(personToRemove))
 				{
-					return StatusCode(200, "OK");
+					// The person was removed
+					return StatusCode(200);
 				}
 			}
 
-			return StatusCode(404, "Person Not Found!");
+			// The person was not removed, the person probably
+			// was not in the register
+			return StatusCode(404);
 		}
 	}
 

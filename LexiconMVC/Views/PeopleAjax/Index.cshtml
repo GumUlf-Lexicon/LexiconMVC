@@ -24,10 +24,14 @@
 				</div>
 
 				<div class="card card-body bg-light">
-					<label for="personIdInput" class="fw-bold float-start">Person ID:</label>
+					<label for="personIdInput" class="fw-bold float-start card-title">Person ID:</label>
 					<input id="personIdInput" type="number" class="my-1" />
 					<input type="button" class="btn btn-info my-1" onclick="getPersonById()" value="Get details" />
 					<input type="button" class="btn btn-danger my-1" onclick="removePersonById()" value="Remove person" />
+
+					<div class="card card-body bg-light mt-1">
+						<div id="userMessages" class="fw-bold card-text"></div>
+					</div>
 				</div>
 
 			</div>
@@ -37,7 +41,6 @@
 
 	</div>
 
-	<div id="userMessages"></div>
 
 
 </div>
