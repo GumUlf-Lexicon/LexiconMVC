@@ -1,4 +1,7 @@
-﻿@{
+﻿@* People (non-ajax) *@
+
+
+@{
 	ViewData["Title"] = "People";
 }
 
@@ -12,26 +15,9 @@
 	<div class="col-lg-8">
 		<div class="card card-body bg-light">
 			<h3 class="text-center card-header mb-2">List of persons</h3>
-			<div class="row pt-2 border-bottom">
-				<div class="col-3 fw-bold">@Html.DisplayNameFor(m => Model.People.FirstOrDefault().Name)</div>
-				<div class="col-3 fw-bold">@Html.DisplayNameFor(m => Model.People.FirstOrDefault().PhoneNumber)</div>
-				<div class="col-4 fw-bold">@Html.DisplayNameFor(m => Model.People.FirstOrDefault().City)</div>
-				<div class="col-2">&nbsp;</div>
-			</div>
 
-			@{
-				foreach(Person person in Model.People)
-				{
-					if(string.IsNullOrWhiteSpace(Model.SearchPhrase)
-						|| person.Name.Contains(Model.SearchPhrase, StringComparison.InvariantCultureIgnoreCase)
-						|| person.City.Contains(Model.SearchPhrase, StringComparison.InvariantCultureIgnoreCase))
-					{
+			<partial name="_partialPersonList" model=Model.PersonListView />
 
-						<partial name="_partialPerson" model=person />
-
-					}
-				}
-			}
 		</div>
 	</div>
 
@@ -40,6 +26,7 @@
 		<div class="card card-body bg-light mb-2">
 			<h5 class="card-header mb-2">Filter list</h5>
 			<form asp-controller="People" asp-action="FilterPersons" method="post">
+				@Html.AntiForgeryToken()
 				<table>
 					<tr>
 						<td>
@@ -60,7 +47,7 @@
 
 		<div class="card card-body bg-light">
 			<h5 class="card-header mb-2">Add person</h5>
-			<partial name="_partialCreatePersonForm" model=Model.Cpvm />
+			<partial name="_partialCreatePersonForm" model=Model.CreatePersonVM />
 		</div>
 	</div>
 </div>

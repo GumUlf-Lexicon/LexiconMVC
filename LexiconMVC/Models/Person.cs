@@ -12,10 +12,19 @@ namespace LexiconMVC.Models
 	// – Person data.
 	public class Person
 	{
-		private static int currentPersonId = 0;
+
+		private int _personId;
 
 		[DisplayName("Person ID")]
-		public int PersonId { get; private set; }
+		public int PersonId {
+			get { return _personId; }
+			private set
+			{
+				if(value <=0)
+					throw new ArgumentException("The person's ID has to be larger than 0!");
+				_personId = value;
+			}
+		}
 
 
 		private string _name;
@@ -60,12 +69,12 @@ namespace LexiconMVC.Models
 			}
 		}
 
-		public Person(string name, string phoneNumber, string city)
+		public Person(string name, string phoneNumber, string city, int personId)
 		{
 			Name = name;
 			PhoneNumber = phoneNumber;
 			City = city;
-			PersonId = ++currentPersonId;
+			PersonId = personId;
 		}
 	}
 }

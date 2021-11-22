@@ -9,60 +9,96 @@ namespace LexiconMVC.Controllers
 {
 	public class PeopleController: Controller
 	{
-		private static readonly PeopleViewModel pwm = new PeopleViewModel();
-		private static bool isPeoplePopulated = false;
+		private static bool _isPeoplePopulated = false;
 
+		[HttpGet]
 		public IActionResult Index()
 		{
-			if(!isPeoplePopulated)
+			PeopleRegister people = new PeopleRegister();
+
+			PeopleViewModel peopleVM = new PeopleViewModel(people.GetPersons());
+					
+			if(!_isPeoplePopulated)
 			{
-				_ = pwm.PopulatePeople();
-				isPeoplePopulated = true;
+				_isPeoplePopulated = people.Populate();
 			}
 
-			return View(pwm);
+			return View(peopleVM);
 		}
 
-		public IActionResult RemovePerson(int personId)
+
+		[HttpPost]
+		public IActionResult Index(PeopleViewModel peopleVM)
 		{
-			int personIndex =	pwm.People.FindIndex(person => person.PersonId == personId);
+			PeopleRegister people = new PeopleRegister();
+			peopleVM.PersonListView.Clear();
 
-			if(personIndex >= 0)
+			foreach(Person person in people.GetPersons())
 			{
-				pwm.People.RemoveAt(personIndex);
+				if(person.Name.Contains(peopleVM.SearchPhrase, StringComparison.InvariantCultureIgnoreCase))
+				{
+					peopleVM.PersonListView.Add(person);
+				}
 			}
-
-			return View("Index", pwm);
+			return View(peopleVM);
 		}
+
+
 
 		[HttpPost]
 		public IActionResult CreatePerson(CreatePersonViewModel createPersonVM)
 		{
 
+			PeopleRegister people = new PeopleRegister();
+			PeopleViewModel peopleVM = new PeopleViewModel(people.GetPersons());
+
 			if(ModelState.IsValid)
 			{
-				pwm.People.Add(new Person(createPersonVM.Name, createPersonVM.PhoneNumber, createPersonVM.City));
+				people.Add(createPersonVM.Name, createPersonVM.PhoneNumber, createPersonVM.City);
 				ModelState.Clear();
-				pwm.SearchPhrase = null;
+				peopleVM.SearchPhrase = null;
 			}
 
-			return View("Index", pwm);
+			return View("Index", peopleVM);
 		}
 
+		[HttpGet]
+		public IActionResult RemovePerson(int personId)
+		{
+			PeopleRegister people = new PeopleRegister();
+			PeopleViewModel peopleVM = new PeopleViewModel(people.GetPersons());
+
+			_ = people.Remove(people.GetPerson(personId));
+
+			return View("Index", peopleVM);
+		}
 
 		[HttpPost]
 		public IActionResult FilterPersons(string searchPhrase)
 		{
+			PeopleRegister people = new PeopleRegister();
+			PeopleViewModel peopleVM = new PeopleViewModel();
+
 			if(string.IsNullOrWhiteSpace(searchPhrase))
 			{
-				pwm.SearchPhrase = null;
+				peopleVM.SearchPhrase = null;
 			}
 			else
 			{
-				pwm.SearchPhrase = searchPhrase;
+				peopleVM.SearchPhrase = searchPhrase;
 			}
 
-			return View("Index", pwm);
+			foreach(Person person in people.GetPersons())
+			{
+				if(peopleVM.SearchPhrase is null 
+					|| person.Name.Contains(peopleVM.SearchPhrase, StringComparison.InvariantCultureIgnoreCase)
+					|| person.City.Contains(peopleVM.SearchPhrase, StringComparison.InvariantCultureIgnoreCase))
+				{
+					peopleVM.PersonListView.Add(person);
+				}
+			}
+
+			return View("Index", peopleVM);
 		}
 	}
 }

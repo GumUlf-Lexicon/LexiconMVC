@@ -2,6 +2,7 @@
 
 @using(Html.BeginForm("CreatePerson", "People", FormMethod.Post))
 {
+	@Html.AntiForgeryToken()
 	<div asp-validation-summary="ModelOnly"></div>
 	<table>
 		<tr>

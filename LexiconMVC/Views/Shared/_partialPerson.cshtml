@@ -2,8 +2,10 @@
 @model Person
 
 <div class="row pt-2 border-bottom">
+	<div class="col-1">@Model.PersonId</div>
 	<div class="col-3">@Model.Name</div>
 	<div class="col-3">@Model.PhoneNumber</div>
-	<div class="col-4">@Model.City</div>
+	<div class="col-3">@Model.City</div>
 	<div class="col-2"><a class="btn btn-outline-danger btn-sm float-start" asp-controller="People" asp-action="RemovePerson" asp-route-personId=@Model.PersonId>Delete</a> </div>
+
 </div>
