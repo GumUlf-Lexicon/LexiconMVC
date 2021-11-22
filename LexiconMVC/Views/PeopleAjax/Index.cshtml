@@ -5,3 +5,39 @@
 	ViewData["Title"] = "People";
 }
 
+<div class="container">
+
+
+	<h1 class="text-center">People Index</h1>
+
+	<div>
+		<div class="row">
+
+			<div class="col-md-8 border-1 min">
+				<div id="PersonList"></div>
+			</div>
+
+
+			<div class="col-md-4 mt-5">
+				<div class="card card-body bg-light mb-2">
+					<input type="button" class="btn btn-info" onclick="getAllPersons()" value="Get people" />
+				</div>
+
+				<div class="card card-body bg-light">
+					<label for="personIdInput" class="fw-bold float-start">Person ID:</label>
+					<input id="personIdInput" type="number" class="my-1" />
+					<input type="button" class="btn btn-info my-1" onclick="getPersonById()" value="Get details" />
+					<input type="button" class="btn btn-danger my-1" onclick="removePersonById()" value="Remove person" />
+				</div>
+
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<div id="userMessages"></div>
+
+
+</div>

@@ -16,6 +16,14 @@ footer {
 	padding-top: 1em;
 }
 
+.row-striped:nth-of-type(even){
+	background-color: antiquewhite;
+
+}
+
+.row-striped:nth-of-type(odd) {
+	background-color: #d8d8d8;
+}
 
 /*
 .bold {

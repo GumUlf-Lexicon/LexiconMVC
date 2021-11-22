@@ -10,12 +10,12 @@
 </head>
 <body>
 
-	<header class="container">
+	<header class="container pb-5">
 
 
-		<nav class="navbar navbar-dark bg-dark navbar-expand-md">
+		<nav class="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
 			<div class="container">
-				<div class="navbar-brand"><img class="logo-image rounded-pill" src="~/images/YmserSolutions_transparent.png" /></div>
+				<div class="navbar-brand"><img class="logo-image rounded-pill" src="~/images/YmserSolutions_transparent.png" alt="Ymser Solutions logotype"/></div>
 				<button class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#mainMenu">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -27,7 +27,7 @@
 						<li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Projects">Projects</a></li>
 						<li class="nav-item"><a class="nav-link" asp-controller="Doctor" asp-action="FeverCheck">Fever Check</a></li>
 						<li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="GuessingGame">Guessing Game</a></li>
-						<li class="nav-item"><a class="nav-link" asp-controller="People" asp-action="Index">People</a></li>
+						<li class="nav-item"><a class="nav-link" asp-controller="PeopleAjax" asp-action="Index">People</a></li>
 					</ul>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 		@RenderBody()
 	</main>
 
-	<footer class="container border-top">
+	<footer class="container border-top mt-3">
 		<div class="text-center">@DateTime.Now.ToShortDateString()</div>
 		<div class="text-center">Ulf Andersson</div>
 	</footer>
@@ -49,6 +49,5 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="~/js/PeopleScript.js"></script>
-
 </body>
 </html>

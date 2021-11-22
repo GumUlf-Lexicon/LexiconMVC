@@ -8,6 +8,8 @@ namespace LexiconMVC.Models
 
 		private static int _currentPersonId = 0;
 
+		public static bool HasBeenPopulated { get; set; } = false;
+
 		public bool Populate()
 		{
 			PeopleRegister people = new PeopleRegister();
