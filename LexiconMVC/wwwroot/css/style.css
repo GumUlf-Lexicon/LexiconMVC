@@ -17,12 +17,12 @@ footer {
 }
 
 .row-striped:nth-of-type(even){
-	background-color: antiquewhite;
+	background-color:darkslateblue;
 
 }
 
 .row-striped:nth-of-type(odd) {
-	background-color: #d8d8d8;
+	background-color:darkblue;
 }
 
 /*

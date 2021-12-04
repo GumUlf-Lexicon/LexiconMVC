@@ -1,8 +1,8 @@
-﻿@model List<Person>
+﻿@model List<PersonModel>
 
 @*  Create the header for the list of people  *@
 
-<div class="row pt-2 border-bottom">
+<div class="row pt-2 border-bottom ">
 	<div class="col-1 fw-bold">ID</div>
 	<div class="col-4 fw-bold">@Html.DisplayNameFor(m => Model.FirstOrDefault().Name)</div>
 	<div class="col-3 fw-bold">@Html.DisplayNameFor(m => Model.FirstOrDefault().PhoneNumber)</div>
@@ -13,7 +13,7 @@
 @* Write out rows of person info*@
 
 @{
-	foreach(Person person in Model)
+	foreach(PersonModel person in Model)
 	{
 			<partial name="_partialPerson" model=person />
 	}
