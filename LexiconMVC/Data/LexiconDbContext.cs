@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LexiconMVC.Data
 {
-	public class PeopleDbContext: DbContext
+	public class LexiconDbContext: DbContext
 	{
-		public PeopleDbContext(DbContextOptions<PeopleDbContext> options) : base(options) { }
+		public LexiconDbContext(DbContextOptions<LexiconDbContext> options) : base(options) { }
 
 		public DbSet<PersonModel> People { get; set; }
 

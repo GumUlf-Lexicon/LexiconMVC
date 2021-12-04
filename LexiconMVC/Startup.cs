@@ -37,8 +37,8 @@ namespace LexiconMVC
 				options.Cookie.IsEssential = true;
 			});
 
-			services.AddDbContext<PeopleDbContext>(options =>
-				options.UseSqlServer(Configuration.GetConnectionString("PeopleDbConnection"))
+			services.AddDbContext<LexiconDbContext>(options =>
+				options.UseSqlServer(Configuration.GetConnectionString("LexiconDbConnection"))
 			);
 
 			services.AddMvc();

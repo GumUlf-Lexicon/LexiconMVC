@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LexiconMVC.Migrations
 {
-    [DbContext(typeof(PeopleDbContext))]
-    [Migration("20211203040056_Seeding data")]
-    partial class Seedingdata
+    [DbContext(typeof(LexiconDbContext))]
+    [Migration("20211204140638_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

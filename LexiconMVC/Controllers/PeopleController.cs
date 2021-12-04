@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using LexiconMVC.Models;
 using LexiconMVC.Data;
 
@@ -11,9 +9,9 @@ namespace LexiconMVC.Controllers
 	public class PeopleController: Controller
 	{
 
-		private readonly PeopleDbContext _peopleDb;
+		private readonly LexiconDbContext _peopleDb;
 
-		public PeopleController(PeopleDbContext peopleDb)
+		public PeopleController(LexiconDbContext peopleDb)
 		{
 			_peopleDb = peopleDb;
 		}
