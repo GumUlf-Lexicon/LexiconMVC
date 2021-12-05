@@ -1,0 +1,13 @@
+﻿
+@model CountryModel
+
+<div class="row py-2 border-bottom row-striped">
+	<div class="col-2">@Model.CountryId</div>
+	<div class="col-4">@Model.Name</div>
+	<div class="col-4">@Model.Population</div>
+	<div class="col-2">
+		<a class="btn btn-danger btn-sm fw-bold float-start" onclick="removeCountryByIdArg(@Model.CountryId)">X</a>
+		&nbsp;
+	</div>
+
+</div>

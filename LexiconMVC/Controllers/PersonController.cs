@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using LexiconMVC.Models;
 using LexiconMVC.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace LexiconMVC.Controllers
 {
-	public class PeopleController: Controller
+	public class PersonController: Controller
 	{
 
-		private readonly LexiconDbContext _peopleDb;
+		private readonly LexiconDbContext _lexiconDb;
 
-		public PeopleController(LexiconDbContext peopleDb)
+		public PersonController(LexiconDbContext lexiconDb)
 		{
-			_peopleDb = peopleDb;
+			_lexiconDb = lexiconDb;
 		}
 
 		public IActionResult Index()
@@ -25,7 +26,10 @@ namespace LexiconMVC.Controllers
 		[HttpGet]
 		public IActionResult GetPersons()
 		{
-			List<PersonModel> people = _peopleDb.People.ToList();
+			List<PersonModel> people = _lexiconDb.People
+				.Include(person => person.City)
+				.Where(person => person.CityId == person.City.CityId)
+				.ToList();
 			return PartialView("_partialPersonList", people);
 		}
 
@@ -34,11 +38,12 @@ namespace LexiconMVC.Controllers
 		[HttpPost]
 		public IActionResult GetPersonById(int personId)
 		{
-			List<PersonModel> persons =
-				(from person in _peopleDb.People.ToList()
-				 where person.PersonId == personId
-				 select person)
-				 .ToList();
+			List<PersonModel> persons = 
+				_lexiconDb.People
+				.Include(person => person.City)
+				.Where(person => person.PersonId == personId)
+				.Where(person => person.CityId == person.City.CityId)
+				.ToList();
 
 			return PartialView("_partialPersonList", persons);
 		}
@@ -48,14 +53,14 @@ namespace LexiconMVC.Controllers
 		public IActionResult RemovePersonById(int personId)
 		{
 			PersonModel personToRemove =
-				(from person in _peopleDb.People.ToList()
+				(from person in _lexiconDb.People.ToList()
 				 where person.PersonId == personId
 				 select person).FirstOrDefault();
 
 			if(!(personToRemove is null))
 			{
-				_peopleDb.People.Remove(personToRemove);
-				_peopleDb.SaveChanges();
+				_ = _lexiconDb.People.Remove(personToRemove);
+				_lexiconDb.SaveChanges();
 				// The person was removed
 				return StatusCode(200);
 			}

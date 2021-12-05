@@ -1,0 +1,14 @@
+﻿
+@model CityModel
+
+<div class="row py-2 border-bottom row-striped">
+	<div class="col-1">@Model.CityId</div>
+	<div class="col-4">@Model.Name</div>
+	<div class="col-3">@Model.Population</div>
+	<div class="col-3">@Model.Country.Name</div>
+	<div class="col-1">
+		<a class="btn btn-danger btn-sm fw-bold float-start" onclick="removeCityByIdArg(@Model.CityId)">X</a>
+		&nbsp;
+	</div>
+
+</div>

@@ -3,7 +3,7 @@
 
 function getAllPersons() {
 	// Get persons from server
-	$.get("/People/GetPersons", null, function (data) {
+	$.get("/Person/GetPersons", null, function (data) {
 		// Display the list of persons
 		$("#PersonList").html(data);
 	});
@@ -22,7 +22,7 @@ function getAllPersons() {
 function getPersonById() {
 	//Get specific person from server
 	var personIdElement = document.getElementById('personIdInput');
-	$.post("/People/GetPersonById", { personId: personIdElement.value }, function (data) {
+	$.post("/Person/GetPersonById", { personId: personIdElement.value }, function (data) {
 		$("#PersonList").html(data);
 	});
 
@@ -46,7 +46,7 @@ function removePersonById() {
 
 function removePersonByIdArg(personIdInput) {
 	// Remove the person with the supplied ID
-	$.post("/People/RemovePersonById", { personId: personIdInput }, function (data) {
+	$.post("/Person/RemovePersonById", { personId: personIdInput }, function (data) {
 		$("#PersonList").html(data);
 	})
 
