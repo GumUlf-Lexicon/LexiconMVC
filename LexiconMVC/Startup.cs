@@ -1,7 +1,10 @@
 using LexiconMVC.Data;
+using LexiconMVC.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,20 +31,28 @@ namespace LexiconMVC
 		public void ConfigureServices(IServiceCollection services)
 		{
 
-			services.AddDistributedMemoryCache();
+			_ = services.AddDistributedMemoryCache();
 
-			services.AddSession(options =>
-			{
-				options.IdleTimeout = TimeSpan.FromHours(1);
-				options.Cookie.HttpOnly = true;
-				options.Cookie.IsEssential = true;
-			});
+			_ = services.AddSession(options =>
+			  {
+				  options.IdleTimeout = TimeSpan.FromHours(1);
+				  options.Cookie.HttpOnly = true;
+				  options.Cookie.IsEssential = true;
+			  });
 
-			services.AddDbContext<LexiconDbContext>(options =>
-				options.UseSqlServer(Configuration.GetConnectionString("LexiconDbConnection"))
+			_ = services.AddDbContext<LexiconDbContext>(options =>
+				  options.UseSqlServer(Configuration.GetConnectionString("LexiconDbConnection"))
 			);
 
-			services.AddMvc();
+			_ = services.AddIdentity<ApplicationUserModel, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+				.AddDefaultUI()
+				.AddDefaultTokenProviders()
+				.AddEntityFrameworkStores<LexiconDbContext>();
+
+			_ = services.AddControllersWithViews(o => o.Filters.Add(new AuthorizeFilter()));
+			_ = services.AddRazorPages().AddMvcOptions(o => o.Filters.Add(new AuthorizeFilter()));
+
+
 
 		}
 
@@ -50,34 +61,40 @@ namespace LexiconMVC
 		{
 			if(env.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
+				_ = app.UseDeveloperExceptionPage();
 			}
 
-			app.UseStaticFiles();
+			_ = app.UseStaticFiles();
 
-			app.UseRouting();
+			_ = app.UseRouting();
 
-			app.UseSession();
+			_ = app.UseAuthentication();
+			_ = app.UseAuthorization();
 
-			app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapControllerRoute(
-					name: "fevercheck",
-					pattern: "FeverCheck",
-					defaults: new { controller = "Doctor", action = "FeverCheck" }
-				);
+			_ = app.UseSession();
 
-				endpoints.MapControllerRoute(
-					name: "guessingGame",
-					pattern: "/GuessingGame",
-					defaults: new { controller = "Home", action = "GuessingGame" }
-				);
+			_ = app.UseEndpoints(endpoints =>
+			  {
+				  _ = endpoints.MapControllerRoute(
+					  name: "fevercheck",
+					  pattern: "FeverCheck",
+					  defaults: new { controller = "Doctor", action = "FeverCheck" }
+				  );
 
-				endpoints.MapControllerRoute(
-					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}"
-				);
-			});
+				  _ = endpoints.MapControllerRoute(
+					  name: "guessingGame",
+					  pattern: "/GuessingGame",
+					  defaults: new { controller = "Home", action = "GuessingGame" }
+				  );
+
+				  _ = endpoints.MapControllerRoute(
+					  name: "default",
+					  pattern: "{controller=Home}/{action=Index}/{id?}"
+				  );
+
+				  _ = endpoints.MapRazorPages();
+
+			  });
 		}
 	}
 }

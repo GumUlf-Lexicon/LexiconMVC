@@ -1,9 +1,10 @@
 ﻿using LexiconMVC.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LexiconMVC.Data
 {
-	public class LexiconDbContext: DbContext
+	public class LexiconDbContext: IdentityDbContext<ApplicationUserModel>
 	{
 		public LexiconDbContext(DbContextOptions<LexiconDbContext> options) : base(options) { }
 
@@ -12,11 +13,13 @@ namespace LexiconMVC.Data
 		public DbSet<PersonModel> People { get; set; }
 		public DbSet<LanguageModel> Languages { get; set; }
 		public DbSet<PersonLanguageModel> PersonLanguages { get; set; }
-
-
+		public override DbSet<ApplicationUserModel> Users { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+
+			base.OnModelCreating(modelBuilder);
+
 			_ = modelBuilder.Entity<PersonLanguageModel>().HasKey(pl => new { pl.PersonId, pl.LanguageId });
 
 			_ = modelBuilder.Entity<PersonLanguageModel>()
