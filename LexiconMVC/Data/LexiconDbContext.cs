@@ -98,13 +98,38 @@ namespace LexiconMVC.Data
 
 		private void PersonLanguageSeeding(ModelBuilder modelBuilder)
 		{
-			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 1, LanguageId = 3 });
-			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 1, LanguageId = 2 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 1, LanguageId = 5 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 1, LanguageId = 4 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 1, LanguageId = 9 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 1, LanguageId = 10 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 2, LanguageId = 1 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 2, LanguageId = 10 });
 			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 3, LanguageId = 1 });
-			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 5, LanguageId = 1 });
-			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 13, LanguageId = 2 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 4, LanguageId = 3 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 5, LanguageId = 4 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 5, LanguageId = 6 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 5, LanguageId = 8 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 5, LanguageId = 10 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 6, LanguageId = 3 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 6, LanguageId = 5 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 7, LanguageId = 2 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 7, LanguageId = 7 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 7, LanguageId = 9 });
 			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 7, LanguageId = 3 });
-			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 7, LanguageId = 1 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 8, LanguageId = 5 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 9, LanguageId = 2 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 9, LanguageId = 8 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 10, LanguageId = 8 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 11, LanguageId = 3 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 11, LanguageId = 6 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 11, LanguageId = 9 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 12, LanguageId = 4 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 12, LanguageId = 10 });
+			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 13, LanguageId = 8 });
+
+
+
+
 
 		}
 	}
