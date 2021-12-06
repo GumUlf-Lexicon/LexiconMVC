@@ -3,14 +3,16 @@ using LexiconMVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LexiconMVC.Migrations
 {
     [DbContext(typeof(LexiconDbContext))]
-    partial class LexiconDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211205184525_Added Languages and PersonLanguage relation")]
+    partial class AddedLanguagesandPersonLanguagerelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,41 +222,6 @@ namespace LexiconMVC.Migrations
                         {
                             LanguageId = 3,
                             Name = "Aurorish"
-                        },
-                        new
-                        {
-                            LanguageId = 4,
-                            Name = "Snowlandian"
-                        },
-                        new
-                        {
-                            LanguageId = 5,
-                            Name = "Portigo"
-                        },
-                        new
-                        {
-                            LanguageId = 6,
-                            Name = "Moramini"
-                        },
-                        new
-                        {
-                            LanguageId = 7,
-                            Name = "Brindish"
-                        },
-                        new
-                        {
-                            LanguageId = 8,
-                            Name = "Vigakolin"
-                        },
-                        new
-                        {
-                            LanguageId = 9,
-                            Name = "Stellian"
-                        },
-                        new
-                        {
-                            LanguageId = 10,
-                            Name = "Elfdahlian"
                         });
                 });
 
@@ -270,7 +237,7 @@ namespace LexiconMVC.Migrations
 
                     b.HasIndex("LanguageId");
 
-                    b.ToTable("PersonLanguage");
+                    b.ToTable("PersonLanguageModel");
 
                     b.HasData(
                         new

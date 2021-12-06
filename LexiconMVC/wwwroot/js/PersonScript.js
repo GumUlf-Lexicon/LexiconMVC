@@ -19,6 +19,19 @@ function getAllPersons() {
 }
 
 
+function addLanguageToPersonById() {
+	// Request adding language to person
+	var personId = document.getElementById('personIdInput').value;
+	var languageId = document.getElementById('languageIdInput').value;
+	$.post("/Person/AddLanguageToPerson", { personId: personId, languageId: languageId }, function (data) {
+		$("#PersonList").html(data);
+	});
+
+	// Clearing ID-box value
+	document.getElementById('personIdInput').value = '';
+}
+
+
 function getPersonById() {
 	//Get specific person from server
 	var personIdElement = document.getElementById('personIdInput');
@@ -29,6 +42,8 @@ function getPersonById() {
 	// Clear ID-box value and messages to the user
 	personIdElement.value = '';
 	document.getElementById('userMessages').innerText = '';
+
+	
 }
 
 function removePersonById() {

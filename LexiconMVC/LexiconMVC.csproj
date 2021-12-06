@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20211204223219_Coutries and Cities.Designer.cs" />
     <Compile Remove="Migrations\20211205172558_End.cs" />
     <Compile Remove="Migrations\20211205172558_End.Designer.cs" />
+    <Compile Remove="Migrations\20211205230529_DbSet for PersonLanguageModel.cs" />
+    <Compile Remove="Migrations\20211205230529_DbSet for PersonLanguageModel.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

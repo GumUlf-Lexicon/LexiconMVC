@@ -4,6 +4,7 @@ using System.Linq;
 using LexiconMVC.Models;
 using LexiconMVC.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LexiconMVC.Controllers
 {
@@ -19,6 +20,7 @@ namespace LexiconMVC.Controllers
 
 		public IActionResult Index()
 		{
+			ViewData["LanguageId"] = new SelectList(_lexiconDb.Languages, "LanguageId", "Name");
 			return View();
 		}
 
@@ -29,7 +31,10 @@ namespace LexiconMVC.Controllers
 			List<PersonModel> people = _lexiconDb.People
 				.Include(person => person.City)
 				.Where(person => person.CityId == person.City.CityId)
+				.Include(p => p.PersonLanguages)
+				.ThenInclude(pl => pl.Language)
 				.ToList();
+
 			return PartialView("_partialPersonList", people);
 		}
 
@@ -38,7 +43,7 @@ namespace LexiconMVC.Controllers
 		[HttpPost]
 		public IActionResult GetPersonById(int personId)
 		{
-			List<PersonModel> persons = 
+			List<PersonModel> persons =
 				_lexiconDb.People
 				.Include(person => person.City)
 				.Where(person => person.PersonId == personId)
@@ -68,6 +73,40 @@ namespace LexiconMVC.Controllers
 			// The person was not removed, the person probably
 			// was not in the register
 			return StatusCode(404);
+		}
+
+		[HttpPost]
+		public IActionResult AddLanguageToPerson(int personId, int languageId)
+		{
+			PersonModel person = _lexiconDb.People
+				.Where(person => person.PersonId == personId)
+				.FirstOrDefault();
+
+			LanguageModel language = _lexiconDb.Languages
+				.Where(language => language.LanguageId == languageId)
+				.FirstOrDefault();
+
+			var persLang = _lexiconDb.PersonLanguages
+				.Where(pl => pl.PersonId == personId && pl.LanguageId == languageId).Count();
+
+
+			if(!(person is null) && !(language is null) && persLang == 0)
+			{
+				PersonLanguageModel personLanguage = new PersonLanguageModel
+				{
+					PersonId = personId,
+					LanguageId = languageId
+				};
+
+				_lexiconDb.PersonLanguages.Add(personLanguage);
+				_lexiconDb.SaveChanges();
+
+				return StatusCode(200);
+			}
+
+
+			return StatusCode(404);
+
 		}
 	}
 
