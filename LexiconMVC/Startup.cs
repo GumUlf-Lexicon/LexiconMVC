@@ -1,5 +1,6 @@
 using LexiconMVC.Data;
 using LexiconMVC.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,7 +36,7 @@ namespace LexiconMVC
 
 			_ = services.AddSession(options =>
 			  {
-				  options.IdleTimeout = TimeSpan.FromHours(1);
+				  options.IdleTimeout = TimeSpan.FromMinutes(15);
 				  options.Cookie.HttpOnly = true;
 				  options.Cookie.IsEssential = true;
 			  });
@@ -52,6 +53,26 @@ namespace LexiconMVC
 			_ = services.AddControllersWithViews(o => o.Filters.Add(new AuthorizeFilter()));
 			_ = services.AddRazorPages().AddMvcOptions(o => o.Filters.Add(new AuthorizeFilter()));
 
+			_ = services.Configure<IdentityOptions>(options =>
+			  {
+				  options.User.AllowedUserNameCharacters =
+							"abcdefghijklmnopqrstuvwxyzåäöüæøABCDEFGHIJKLMNOPQRSTUVWXYZåäöüæøß0123456789-._@+";
+				  options.User.RequireUniqueEmail = true;
+				  options.Password.RequiredLength = 12;
+				  
+
+			  });
+
+			_ = services.ConfigureApplicationCookie(options =>
+			{
+				options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+				options.Cookie.HttpOnly = true;
+				options.Cookie.IsEssential = true;
+				options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+				options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+				options.SlidingExpiration = true;
+
+			});
 
 
 		}

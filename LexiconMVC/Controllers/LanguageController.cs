@@ -1,11 +1,13 @@
 ﻿using LexiconMVC.Data;
 using LexiconMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace LexiconMVC.Controllers
 {
+	[Authorize(Roles = "admin")]
 	public class LanguageController: Controller
 	{
 

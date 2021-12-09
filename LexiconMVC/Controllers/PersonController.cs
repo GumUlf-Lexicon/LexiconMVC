@@ -5,9 +5,11 @@ using LexiconMVC.Models;
 using LexiconMVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LexiconMVC.Controllers
 {
+	[Authorize(Roles = "admin, user")]
 	public class PersonController: Controller
 	{
 
@@ -55,6 +57,7 @@ namespace LexiconMVC.Controllers
 
 		// Remove a specific person from the register
 		[HttpPost]
+		[Authorize(Roles = "admin")]
 		public IActionResult RemovePersonById(int personId)
 		{
 			PersonModel personToRemove =

@@ -129,11 +129,7 @@ namespace LexiconMVC.Data
 			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 12, LanguageId = 4 });
 			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 12, LanguageId = 10 });
 			_ = modelBuilder.Entity<PersonLanguageModel>().HasData(new PersonLanguageModel { PersonId = 13, LanguageId = 8 });
-
-
-
-
-
 		}
+
 	}
 }

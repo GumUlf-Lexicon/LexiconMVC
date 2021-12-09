@@ -1,14 +1,19 @@
 ﻿.logo-image {
 	background-color: white;
-	height: 2.3em;
+	height: 2.6em;
 	width: auto;
-	padding: 0.1em;
-	margin: 0 0.2em 0em 1em;
+	padding: 0.2em 0.5em 0.2em 0.2em;
 	border: 0.15em solid black;
 }
 
+.btn {
+	margin-top: 0.5em;
+}
+
+
 h1, h2, h3, h4, h5, h6 {
-	padding-top: 0.8em;
+	padding-top: 0.4em;
+	padding-bottom: 0.1em;
 }
 
 footer {
@@ -25,142 +30,8 @@ footer {
 	background-color:darkblue;
 }
 
-/*
-.bold {
-	font-weight: bold;
+.navbar-brand>a{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
 }
-
-body {
-	font-family: sans-serif;
-	color: black;
-	background-color: floralwhite;
-	width: 1024px;
-	margin: 25px auto;
-	border: 5px solid black;
-}
-
-header {
-	grid-area: header;
-	width: 1024px;
-	padding: 5px 0;
-	margin: 0;
-	display: inline-grid;
-	grid-template-columns: 195px auto;
-	border-bottom: 2px solid black;
-}
-
-.logo-box {
-	width: 150px;
-	margin: 15px 15px 15px 30px;
-	border: 0;
-	padding: 0;
-}
-
-
-header a {
-	display: block;
-	color: firebrick;
-	text-decoration: none;
-	font-weight: bolder;
-}
-
-header > a {
-	font-size: 20px;
-	text-align: right;
-	border: none;
-	padding-top: 5px;
-	padding-right: 25px;
-}
-
-nav {
-	padding-bottom: 0px;
-	padding-top: 20px;
-	margin-bottom: 0px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-	nav ul {
-		float: left;
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		overflow: hidden;
-	}
-
-	nav li {
-		float: left;
-		background-color: cornsilk;
-		border-width: 2px 2px 2px 2px;
-		border-color: black;
-		border-style: solid;
-		border-radius: 10px;
-		margin: 2px;
-	}
-
-	nav a {
-		padding: 8px;
-	}
-
-		nav a:hover {
-			background-color: bisque;
-			border-radius: 10px;
-		}
-
-main {
-	padding: 15px;
-}
-
-
-.project-list {
-	list-style: none;
-}
-
-.project-item {
-	margin: 2px;
-}
-
-form {
-	margin: 15px 0;
-}
-
-table.person-table tr:nth-of-type(2n+1) {
-	background-color: bisque;
-}
-
-table.person-table tr:nth-of-type(2n) {
-	background-color: cornsilk;
-}
-
-table.person-table tr:first-of-type {
-	background-color: lightgray;
-}
-
-table.create-person-table {
-	background-color: cornsilk;
-}
-
-table.create-person-table td:first-child{
-	text-align: right;
-}
-
-table.create-person-table tr:last-of-type {
-	text-align: right;
-}
-
-th, td {
-	padding: 5px 10px;
-}
-
-table.person-table a {
-	text-decoration: none;
-	font-weight: bold;
-	font-size: smaller;
-	color: black;
-}
-
-table.person-table a:hover {
-	color: darkred;
-}
-
-*/

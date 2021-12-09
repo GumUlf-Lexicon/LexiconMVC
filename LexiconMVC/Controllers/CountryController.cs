@@ -1,5 +1,6 @@
 ﻿using LexiconMVC.Data;
 using LexiconMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace LexiconMVC.Controllers
 {
+	[Authorize(Roles = "admin")]
 	public class CountryController: Controller
 	{
 		private readonly LexiconDbContext _lexiconDb;

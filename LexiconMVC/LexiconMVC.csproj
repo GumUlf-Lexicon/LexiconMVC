@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -15,9 +15,14 @@
     <Compile Remove="Migrations\20211206150947_Added Identity.Designer.cs" />
     <Compile Remove="Migrations\20211207085117_Added ApplicationUser.cs" />
     <Compile Remove="Migrations\20211207085117_Added ApplicationUser.Designer.cs" />
+    <Compile Remove="Migrations\20211209174728_Seeding roles and admin user.cs" />
+    <Compile Remove="Migrations\20211209174728_Seeding roles and admin user.Designer.cs" />
+    <Compile Remove="Migrations\20211209183506_DoB set to required.cs" />
+    <Compile Remove="Migrations\20211209183506_DoB set to required.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\items\" />
   </ItemGroup>

@@ -10,46 +10,42 @@
 }
 
 
-<div class="container">
-
+<div class="container-lg">
 
 	<h1 class="text-center">People Index</h1>
 
-	<div>
+	<div class="row">
 
-		<div class="row">
+		<div class="col-xl-8 border-1">
+			<div id="PersonList"></div>
+		</div>
 
-			<div class="col-md-8 border-1 min">
-				<div id="PersonList"></div>
+		<div class="col-xl-4 mt-5">
+
+			<div class="card card-body bg-dark mb-2">
+				<input type="button" class="btn btn-info" onclick="getAllPersons()" value="Get people" />
 			</div>
 
-			<div class="col-md-4 mt-5">
+			<div class="card card-body bg-dark">
+				<div class="form-floating my-1">
+					<input id="personIdInput" type="text" class="form-control text-black" placeholder="Person Id" />
+					<label for="personIdInput" class="text-dark">Person ID</label>
+				</div>
+				<div class="form-floating my-1">
+					<select id="languageIdInput" class="form-select text-black" asp-items="ViewBag.LanguageId"></select>
+					<label for="languageIdInput" class="text-dark">Language</label>
+				</div>
+				<input type="button" class="btn btn-success my-1" onclick="addLanguageToPersonById()" value="Add language" />
 
-				<div class="card card-body bg-dark mb-2">
-					<input type="button" class="btn btn-info" onclick="getAllPersons()" value="Get people" />
+				<!--
+				<input type="button" class="btn btn-info my-1" onclick="getPersonById()" value="Get details" />
+				<input type="button" class="btn btn-danger my-1" onclick="removePersonById()" value="Remove person" />
+				-->
+
+				<div class="card card-body bg-dark mt-1">
+					<div id="userMessages" class="fw-bold card-text"></div>
 				</div>
 
-				<div class="card card-body bg-dark">
-					<div class="form-floating my-1">
-						<input id="personIdInput" type="text" class="form-control text-black" placeholder="Person Id" />
-						<label for="personIdInput" class="text-dark">Person ID</label>
-					</div>
-					<div class="form-floating my-1">
-						<select id="languageIdInput" class="form-select text-black" asp-items="ViewBag.LanguageId"></select>
-						<label for="languageIdInput" class="text-dark">Language</label>
-					</div>
-					<input type="button" class="btn btn-success my-1" onclick="addLanguageToPersonById()" value="Add language" />
-
-					<!--
-					<input type="button" class="btn btn-info my-1" onclick="getPersonById()" value="Get details" />
-					<input type="button" class="btn btn-danger my-1" onclick="removePersonById()" value="Remove person" />
-					-->
-
-					<div class="card card-body bg-dark mt-1">
-						<div id="userMessages" class="fw-bold card-text"></div>
-					</div>
-
-				</div>
 			</div>
 		</div>
 	</div>
