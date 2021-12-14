@@ -1,0 +1,25 @@
+﻿@* Language *@
+@model LanguageAddEditViewModel
+
+@{
+	ViewData["Title"] = Model.SiteTitle;
+}
+
+
+<div class="container-lg mt-3">
+
+	<h1 class="text-center">@Model.SiteTitle</h1>
+
+	<form method="post" asp-controller="Language" asp-action="@Model.SelectedAction" class="my-3">
+		<input asp-for="LanguageId" value=@Model.LanguageId hidden />
+
+		<div class="">
+			<label asp-for="Name" class="form-label">@Html.DisplayNameFor(model => model.Name): </label>
+			<input asp-for="Name" type="text" class="form-control" />
+		</div>
+
+		<div class="d-grid">
+			<button type="submit" class="btn btn-success">@Model.SubmitButtonText</button>
+		</div>
+	</form>
+</div>

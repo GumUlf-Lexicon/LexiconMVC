@@ -2,11 +2,10 @@
 @model LanguageModel
 
 <div class="row py-2 border-bottom row-striped">
-	<div class="col-1">@Model.LanguageId</div>
 	<div class="col-10">@Model.Name</div>
-	<div class="col-1">
-		<a class="btn btn-danger btn-sm fw-bold float-start" onclick="removeLanguageByIdArg(@Model.LanguageId)">X</a>
-		&nbsp;
+	<div class="col-2">
+		<a class="btn btn-light btn-sm fw-bold" asp-controller="Language" asp-action="EditLanguage" asp-route-languageId=@Model.LanguageId>Edit</a>
+		<a class="btn btn-danger btn-sm fw-bold" onclick="removeLanguageByIdArg(@Model.LanguageId)">X</a>
 	</div>
 
 </div>

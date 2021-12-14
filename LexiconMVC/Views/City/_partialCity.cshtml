@@ -2,13 +2,12 @@
 @model CityModel
 
 <div class="row py-2 border-bottom row-striped">
-	<div class="col-1">@Model.CityId</div>
 	<div class="col-4">@Model.Name</div>
 	<div class="col-3">@Model.Population</div>
 	<div class="col-3">@Model.Country.Name</div>
-	<div class="col-1">
-		<a class="btn btn-danger btn-sm fw-bold float-start" onclick="removeCityByIdArg(@Model.CityId)">X</a>
-		&nbsp;
+	<div class="col-2">
+		<a class="btn btn-light btn-sm fw-bold" asp-controller="City" asp-action="EditCity" asp-route-cityId=@Model.CityId>Edit</a>
+		<a class="btn btn-danger btn-sm fw-bold" onclick="removeCityByIdArg(@Model.CityId)">X</a>
 	</div>
 
 </div>

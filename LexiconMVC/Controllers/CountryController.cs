@@ -2,11 +2,8 @@
 using LexiconMVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LexiconMVC.Controllers
 {
@@ -68,6 +65,121 @@ namespace LexiconMVC.Controllers
 			// was not in the register
 			return StatusCode(404);
 		}
+
+
+		[HttpGet]
+		public IActionResult AddCountry()
+		{
+			CountryAddEditViewModel countryViewModel = new CountryAddEditViewModel()
+			{
+				SiteTitle = "Add Country",
+				SelectedAction = "AddCountry",
+				SubmitButtonText = "Add Country",
+			};
+
+			return View("AddEditCountry", countryViewModel);
+		}
+
+
+		[HttpPost]
+		public IActionResult AddCountry(CountryAddEditViewModel newCountry)
+		{
+			if(!ModelState.IsValid)
+			{
+				newCountry.SiteTitle = "Add Country";
+				newCountry.SelectedAction = "AddCountry";
+				newCountry.SubmitButtonText = "Add Country";
+
+				return View("AddEditCountry", newCountry);
+			}
+
+			CountryModel countryToAdd = new CountryModel
+			{
+				Name = newCountry.Name,
+				Population = newCountry.Population
+			};
+			_lexiconDb.Countries.Add(countryToAdd);
+			_lexiconDb.SaveChanges();
+
+			return RedirectToAction("Index");
+
+		}
+
+
+		[HttpGet]
+		public IActionResult EditCountry(int countryId)
+		{
+			CountryModel countryToEdit = _lexiconDb.Countries
+				.Where(country => country.CountryId == countryId)
+				.FirstOrDefault();
+
+			if(countryToEdit is null)
+			{
+				ViewData["UserMessages"] = "Country does not exist";
+
+				return RedirectToAction("Index");
+			}
+
+			CountryAddEditViewModel countryViewModel = new CountryAddEditViewModel()
+			{
+				// Page info
+				SiteTitle = "Edit Country",
+				SelectedAction = "EditCountry",
+				SubmitButtonText = "Update Country",
+
+				// Country info
+				CountryId = countryId,
+				Name = countryToEdit.Name,
+				Population = countryToEdit.Population
+
+			};
+
+			return View("AddEditCountry", countryViewModel);
+		}
+
+
+		[HttpPost]
+		public IActionResult EditCountry(CountryAddEditViewModel updatedCountry)
+		{
+
+			if(!ModelState.IsValid)
+			{
+				return RedirectToAction("AddEditCountry", updatedCountry.CountryId);
+			}
+
+			// Get country model to be able to edit the country
+			CountryModel countryToEdit = _lexiconDb.Countries
+				.Where(country => country.CountryId == updatedCountry.CountryId)
+				.FirstOrDefault();
+
+
+			// The country does not exist, go back to first page
+			if(countryToEdit is null)
+			{
+				ViewData["UserMessages"] = "Country does not exist";
+
+				return View("Index");
+			}
+
+
+			// If the name has changed, update it
+			if(!updatedCountry.Name.Equals(countryToEdit.Name))
+				countryToEdit.Name = updatedCountry.Name;
+
+			// If the population has changed, update it
+			if(updatedCountry.Population != countryToEdit.Population)
+				countryToEdit.Population = updatedCountry.Population;
+
+			// Save the updated country information to the database
+			_lexiconDb.SaveChanges();
+
+			ViewData["UserMessages"] = "Country updated";
+
+			return View("Index");
+		}
+
 	}
 
 }
+
+

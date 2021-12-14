@@ -5,7 +5,7 @@
 	ViewData["Title"] = "Cities";
 }
 
-@section Scripts{ 
+@section Scripts{
 	<script src="~/js/CityScript.js" asp-append-version="true"></script>
 }
 
@@ -16,35 +16,16 @@
 	<h1 class="text-center">City Index</h1>
 
 	<div>
+		<div id="CityList"></div>
 
-		<div class="row">
-
-			<div class="col-md-8 border-1 min">
-				<div id="CityList"></div>
-			</div>
-
-			<div class="col-md-4 mt-5">
-
-				<div class="card card-body bg-dark mb-2">
-					<input type="button" class="btn btn-info" onclick="getAllCities()" value="Get cities" />
-				</div>
-
-
-				<div class="card card-body bg-dark">
-
-					<!--
-					<label for="cityIdInput" class="fw-bold float-start card-title">City ID:</label>
-					<input id="cityIdInput" type="number" class="my-1" />
-					<input type="button" class="btn btn-info my-1" onclick="getCityById()" value="Get details" />
-					<input type="button" class="btn btn-danger my-1" onclick="removeCityById()" value="Remove city" />
-					-->
-					
-					<div class="card card-body bg-dark mt-1">
-						<div id="userMessages" class="fw-bold card-text"></div>
-					</div>
-
-				</div>
-			</div>
+		<div class="card card-body bg-dark mb-2">
+			<input type="button" class="btn btn-info" onclick="getAllCities()" value="Get cities" />
+			<a asp-controller="City" asp-action="AddCity" class="btn btn-success my-1">Add new City</a>
 		</div>
+
+		<div class="card card-body bg-dark mt-1">
+			<div id="userMessages" class="fw-bold card-text"></div>
+		</div>
+
 	</div>
 </div>

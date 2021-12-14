@@ -1,0 +1,31 @@
+﻿@* Country *@
+@model CountryAddEditViewModel
+
+@{
+	ViewData["Title"] = Model.SiteTitle;
+}
+
+
+
+<div class="container-lg mt-3">
+
+	<h1 class="text-center">@Model.SiteTitle</h1>
+
+	<form method="post" asp-controller="Country" asp-action="@Model.SelectedAction" class="my-3">
+		<input asp-for="CountryId" value=@Model.CountryId hidden />
+
+		<div class="">
+			<label asp-for="Name" class="form-label">@Html.DisplayNameFor(model => model.Name): </label>
+			<input asp-for="Name" type="text" class="form-control" />
+		</div>
+
+		<div class="">
+			<label asp-for="Population" class="form-label">@Html.DisplayNameFor(model => model.Population): </label>
+			<input asp-for="Population" type="number" class="form-control" />
+		</div>
+
+		<div class="d-grid">
+			<button type="submit" class="btn btn-success">@Model.SubmitButtonText</button>
+		</div>
+	</form>
+</div>

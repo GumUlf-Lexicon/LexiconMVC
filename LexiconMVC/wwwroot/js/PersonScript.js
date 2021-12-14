@@ -1,7 +1,6 @@
-﻿clearUserMessages = true;
+﻿
 
-
-function getAllPersons() {
+function getAllPersons(clearUserMessages = true) {
 	// Get persons from server
 	$.get("/Person/GetPersons", null, function (data) {
 		// Display the list of persons
@@ -11,11 +10,10 @@ function getAllPersons() {
 	// Clear ID-box value
 	document.getElementById('personIdInput').value = '';
 
-	// Only clear the UserMessages if not just set by another calling function
+	// Clear the UserMessages if requested to
 	if (clearUserMessages) {
 		document.getElementById('userMessages').innerText = '';
 	}
-	clearUserMessages = true;
 }
 
 
@@ -46,6 +44,11 @@ function getPersonById() {
 	
 }
 
+function editPersonById() {
+	var personIdInput = document.getElementById('personIdInput').value;
+	window.location.href = '/Person/EditPerson?personId=' + personIdInput;
+}
+
 function removePersonById() {
 	// Remove a person from the list of people
 	// Used by forms et.c.
@@ -69,22 +72,19 @@ function removePersonByIdArg(personIdInput) {
 		.done(function () {
 			document.getElementById('userMessages').innerText = "Person is removed from the list!";
 
-			// Don't clear the userMessages, just set above, 
-			// when calling getAllPersons()
-			clearUserMessages = false;
+			// Update the list with persons
+			getAllPersons(false);
 		})
 
 		// I did not work, tell the user.
 		.fail(function () {
 			document.getElementById('userMessages').innerText = "Person could not be found and/or removed!";
 
-			// Don't clear the userMessages, just set above,
-			// when calling getAllPersons()
-			clearUserMessages = false;
+			// Update the list with persons
+			getAllPersons(false);	
+
 		});
 	
 
-	// Update the list with persons
-	getAllPersons();
 
 }

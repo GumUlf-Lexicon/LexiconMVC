@@ -2,12 +2,14 @@
 @model CountryModel
 
 <div class="row py-2 border-bottom row-striped">
-	<div class="col-2">@Model.CountryId</div>
-	<div class="col-4">@Model.Name</div>
+	<div class="col-5">@Model.Name</div>
 	<div class="col-4">@Model.Population</div>
-	<div class="col-2">
-		<a class="btn btn-danger btn-sm fw-bold float-start" onclick="removeCountryByIdArg(@Model.CountryId)">X</a>
-		&nbsp;
+	<div class="col-3">
+
+		<a class="btn btn-light btn-sm fw-bold" asp-controller="Country" asp-action="EditCountry" asp-route-countryId=@Model.CountryId>Edit</a>
+		<a class="btn btn-danger btn-sm fw-bold" onclick="removeCountryByIdArg(@Model.CountryId)">X</a>
+
 	</div>
 
 </div>
+

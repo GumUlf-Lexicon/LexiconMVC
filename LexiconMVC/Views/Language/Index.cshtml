@@ -17,33 +17,16 @@
 
 	<div>
 
-		<div class="row">
+		<div id="LanguageList"></div>
 
-			<div class="col-md-8 border-1 min">
-				<div id="LanguageList"></div>
-			</div>
-
-			<div class="col-md-4 mt-5">
-
-				<div class="card card-body bg-dark mb-2">
-					<input type="button" class="btn btn-info" onclick="getAllLanguages()" value="Get languages" />
-				</div>
-
-				<div class="card card-body bg-dark">
-
-					<!--
-		  			<label for="languageIdInput" class="fw-bold float-start card-title">Language ID:</label>
-					<input id="languageIdInput" type="number" class="my-1" />
-					<input type="button" class="btn btn-info my-1" onclick="getLanguageById()" value="Get details" />
-					<input type="button" class="btn btn-danger my-1" onclick="removeLanguageById()" value="Remove language" />
-					-->
-
-					<div class="card card-body bg-dark mt-1">
-						<div id="userMessages" class="fw-bold card-text"></div>
-					</div>
-
-				</div>
-			</div>
+		<div class="card card-body bg-dark mb-2">
+			<input type="button" class="btn btn-info" onclick="getAllLanguages()" value="Get languages" />
+			<a asp-controller="Language" asp-action="AddLanguage" class="btn btn-success my-1">Add new Language</a>
 		</div>
+
+		<div class="card card-body bg-dark mt-1">
+			<div id="userMessages" class="fw-bold card-text"></div>
+		</div>
+
 	</div>
 </div>
