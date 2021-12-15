@@ -2,10 +2,10 @@
 @model PersonModel
 
 <div class="row py-2 border-bottom row-striped">
-	<div class="col-3">@Model.Name</div>
+	<div class="col-2">@Model.Name</div>
 	<div class="col-2">@Model.PhoneNumber</div>
-	<div class="col-2">@Model.City.Name</div>
-	<div class="col-3">
+	<div class="col-2">@Model.City.Name, @Model.City.Country.Name</div>
+	<div class="col-4">
 
 		@{
 			List<string> languages = new List<string>();

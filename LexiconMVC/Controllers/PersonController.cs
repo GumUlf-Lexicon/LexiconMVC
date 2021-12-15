@@ -22,7 +22,6 @@ namespace LexiconMVC.Controllers
 
 		public IActionResult Index()
 		{
-			ViewData["Languages"] = new SelectList(_lexiconDb.Languages, "LanguageId", "Name");
 			return View();
 		}
 
@@ -32,9 +31,9 @@ namespace LexiconMVC.Controllers
 		{
 			List<PersonModel> people = _lexiconDb.People
 				.Include(person => person.City)
-				.Where(person => person.CityId == person.City.CityId)
-				.Include(p => p.PersonLanguages)
+				.Include(person => person.PersonLanguages)
 				.ThenInclude(pl => pl.Language)
+				.Include(person => person.City.Country)
 				.ToList();
 
 			return PartialView("_partialPersonList", people);
@@ -49,7 +48,7 @@ namespace LexiconMVC.Controllers
 				_lexiconDb.People
 				.Include(person => person.City)
 				.Where(person => person.PersonId == personId)
-				.Where(person => person.CityId == person.City.CityId)
+				.Include(person => person.City.Country)
 				.ToList();
 
 			return PartialView("_partialPersonList", persons);
