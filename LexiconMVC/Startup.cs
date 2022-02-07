@@ -3,7 +3,6 @@ using LexiconMVC.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +10,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using JavaScriptEngineSwitcher.V8;
+using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
+using React.AspNet;
+
 
 namespace LexiconMVC
 {
@@ -50,6 +51,12 @@ namespace LexiconMVC
 				.AddDefaultTokenProviders()
 				.AddEntityFrameworkStores<LexiconDbContext>();
 
+			_ = services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			_ = services.AddReact();
+
+			_ = services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName).AddV8();
+
+
 			_ = services.AddControllersWithViews(o => o.Filters.Add(new AuthorizeFilter()));
 			_ = services.AddRazorPages().AddMvcOptions(o => o.Filters.Add(new AuthorizeFilter()));
 
@@ -59,7 +66,7 @@ namespace LexiconMVC
 							"abcdefghijklmnopqrstuvwxyzåäöüæøABCDEFGHIJKLMNOPQRSTUVWXYZåäöüæøß0123456789-._@+";
 				  options.User.RequireUniqueEmail = true;
 				  options.Password.RequiredLength = 12;
-				  
+
 
 			  });
 
@@ -84,6 +91,8 @@ namespace LexiconMVC
 			{
 				_ = app.UseDeveloperExceptionPage();
 			}
+
+			_ = app.UseReact(config =>	{});
 
 			_ = app.UseStaticFiles();
 
