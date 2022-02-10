@@ -22,9 +22,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="React\src\Person\App.jsx" />
+    <Content Include="React\src\Person\PersonItem.jsx" />
+    <Content Include="React\src\Person\PersonList.jsx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\items\" />
+    <Folder Include="wwwroot\React\" />
   </ItemGroup>
 
   <ItemGroup>

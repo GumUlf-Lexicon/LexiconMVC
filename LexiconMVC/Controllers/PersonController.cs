@@ -36,7 +36,7 @@ namespace LexiconMVC.Controllers
 				.Include(person => person.City.Country)
 				.ToList();
 
-			return PartialView("_partialPersonList", people);
+			return Json(people);
 		}
 
 
