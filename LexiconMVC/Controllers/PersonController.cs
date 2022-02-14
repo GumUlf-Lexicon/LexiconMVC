@@ -1,6 +1,7 @@
 ﻿using LexiconMVC.Data;
 using LexiconMVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,8 @@ using System.Linq;
 
 namespace LexiconMVC.Controllers
 {
-	[Authorize(Roles = "admin, user")]
+	[AllowAnonymous]
+	//[Authorize(Roles = "admin, user")]
 	public class PersonController: Controller
 	{
 
@@ -29,29 +31,58 @@ namespace LexiconMVC.Controllers
 		[HttpGet]
 		public IActionResult GetPersons()
 		{
-			List<PersonModel> people = _lexiconDb.People
+			List<PersonMinimalViewModel> people = _lexiconDb.People
 				.Include(person => person.City)
-				.Include(person => person.PersonLanguages)
-				.ThenInclude(pl => pl.Language)
-				.Include(person => person.City.Country)
+				.ThenInclude(c => c.Country)
+				.Select(p => new PersonMinimalViewModel
+				{
+					PersonId = p.PersonId,
+					Name = p.Name,
+					CityName = p.City.Name,
+					CountryName = p.City.Country.Name
+				})
 				.ToList();
 
 			return Json(people);
+
 		}
 
 
 		// Get a specific person in the people register
 		[HttpPost]
-		public IActionResult GetPersonById(int personId)
+		public IActionResult PostGetPersonById([FromBody] int personId)
 		{
-			List<PersonModel> persons =
+			PersonInfoViewModel person =
 				_lexiconDb.People
 				.Include(person => person.City)
 				.Where(person => person.PersonId == personId)
 				.Include(person => person.City.Country)
-				.ToList();
+				.Select(p => new PersonInfoViewModel
+				{
+					PersonId = p.PersonId,
+					Name = p.Name,
+					PhoneNumber = p.PhoneNumber,
+					CityName = p.City.Name,
+					CountryName = p.City.Country.Name,
+				})
+				.FirstOrDefault();
 
-			return PartialView("_partialPersonList", persons);
+			if(person is null)
+			{
+				return StatusCode(StatusCodes.Status404NotFound, "Person not found");
+			}
+
+			person.Languages = _lexiconDb.PersonLanguages
+					.Include(pl => pl.Language)
+					.Where(pl => pl.LanguageId == pl.Language.LanguageId && pl.PersonId == personId)
+					.Select(pl => new LanguageViewModel
+					{
+						LanguageId = pl.LanguageId,
+						Name = pl.Language.Name
+					})
+					.ToList();
+
+			return Json(person);
 		}
 
 		// Remove a specific person from the register
@@ -116,55 +147,24 @@ namespace LexiconMVC.Controllers
 		{
 			PersonAddEditViewModel personViewModel = new PersonAddEditViewModel()
 			{
-				SiteTitle = "Add Person",
-				SelectedAction = "AddPerson",
-				SubmitButtonText = "Add Person",
-
-				Languages = _lexiconDb.Languages.Select(
-					s => new SelectListItem
-					{
-						Selected = false,
-						Text = s.Name,
-						Value = s.LanguageId.ToString()
-					}).ToList(),
-				Cities = _lexiconDb.Cities.Select(
-					s => new SelectListItem()
-					{
-						Selected = false,
-						Text = s.Name,
-						Value = s.CityId.ToString()
-					}).ToList()
+				PersonId = 0,
+				Name = "",
+				PhoneNumber = "",
+				SelectedLanguageIds = new List<int>(),
+				Languages = GetLanguages(),
+				CityId = 0,
+				Cities = GetCities(),
 			};
 
-			return View("AddEditPerson", personViewModel);
+			return Json(personViewModel);
 		}
 
 		[HttpPost]
-		public IActionResult AddPerson(PersonAddEditViewModel newPerson)
+		public IActionResult AddPerson([FromBody]PersonAddEditViewModel newPerson)
 		{
 			if(!ModelState.IsValid)
 			{
-				newPerson.SiteTitle = "Add Person";
-				newPerson.SelectedAction = "AddPerson";
-				newPerson.SubmitButtonText = "Add Person";
-
-				newPerson.Languages = _lexiconDb.Languages.Select(
-						s => new SelectListItem
-						{
-							Selected = false,
-							Text = s.Name,
-							Value = s.LanguageId.ToString()
-						}).ToList();
-				newPerson.Cities = _lexiconDb.Cities.Select(
-						s => new SelectListItem()
-						{
-							Selected = false,
-							Text = s.Name,
-							Value = s.CityId.ToString()
-						}).ToList();
-
-
-				return View("AddEditPerson", newPerson);
+				return StatusCode(StatusCodes.Status422UnprocessableEntity, "Person object not valid");
 			}
 
 			PersonModel personToAdd = new PersonModel
@@ -177,7 +177,7 @@ namespace LexiconMVC.Controllers
 			_lexiconDb.SaveChanges();
 
 
-			foreach(int langId in newPerson.LanguageIds)
+			foreach(int langId in newPerson.SelectedLanguageIds)
 			{
 				if(_lexiconDb.Languages.Where(language => language.LanguageId == langId).Count() == 1)
 				{
@@ -191,7 +191,7 @@ namespace LexiconMVC.Controllers
 			}
 			_lexiconDb.SaveChanges();
 
-			return RedirectToAction("Index");
+			return StatusCode(StatusCodes.Status201Created, "Person added!");
 		}
 
 
@@ -204,49 +204,30 @@ namespace LexiconMVC.Controllers
 
 			if(personToEdit is null)
 			{
-				ViewData["UserMessages"] = "Person does not exist";
-
-				return RedirectToAction("Index");
+				return StatusCode(StatusCodes.Status404NotFound, "Person does not exist!");
 			}
 
 			PersonAddEditViewModel personViewModel = new PersonAddEditViewModel()
 			{
-				// Page info
-				SiteTitle = "Edit Person",
-				SelectedAction = "EditPerson",
-				SubmitButtonText = "Update Person",
-
 				// Person info
 				PersonId = personId,
 				Name = personToEdit.Name,
 				PhoneNumber = personToEdit.PhoneNumber,
 				CityId = personToEdit.CityId,
 
-				LanguageIds = _lexiconDb.PersonLanguages
+				SelectedLanguageIds = _lexiconDb.PersonLanguages
 				.Include(pl => pl.Language)
 				.Where(pl => pl.LanguageId == pl.Language.LanguageId && pl.PersonId == personId)
 				.Select(pl => pl.LanguageId)
-				.ToArray(),
-
+				.ToList(),
 
 				// Available cities and languages
-				Cities = _lexiconDb.Cities.Select(
-					s => new SelectListItem()
-					{
-						Text = s.Name,
-						Value = s.CityId.ToString()
-					}).ToList(),
-
-				Languages = _lexiconDb.Languages.Select(
-					s => new SelectListItem
-					{
-						Text = s.Name,
-						Value = s.LanguageId.ToString()
-					}).ToList()
+				Cities = GetCities(),
+				Languages = GetLanguages(),
 
 			};
 
-			return View("AddEditPerson", personViewModel);
+			return StatusCode(StatusCodes.Status200OK, "Person updated!");
 		}
 
 
@@ -300,8 +281,8 @@ namespace LexiconMVC.Controllers
 				.ToList();
 
 			// Find out what languages to and and to remove
-			List<int> languagesToAdd = updatedPerson.LanguageIds.Except(personLanguages).ToList();
-			List<int> languagesToRemove = personLanguages.Except(updatedPerson.LanguageIds).ToList();
+			List<int> languagesToAdd = updatedPerson.SelectedLanguageIds.Except(personLanguages).ToList();
+			List<int> languagesToRemove = personLanguages.Except(updatedPerson.SelectedLanguageIds).ToList();
 
 			// Add new languages to the person, if the language is valid
 			foreach(int langId in languagesToAdd)
@@ -337,6 +318,29 @@ namespace LexiconMVC.Controllers
 			return View("Index");
 		}
 
+
+		private List<LanguageViewModel> GetLanguages()
+		{
+			return _lexiconDb.Languages
+					.Select(l => new LanguageViewModel
+					{
+						Name = l.Name,
+						LanguageId = l.LanguageId
+					}).ToList();
+		}
+
+		private List<CityViewModel> GetCities()
+		{
+			return _lexiconDb.Cities
+					.Select(c => new CityViewModel
+					{
+						Name = c.Name,
+						CityId = c.CityId,
+						Population = c.Population,
+						CountryId = c.CountryId,
+						CountryName = c.Country.Name,
+					}).ToList();
+		}
 	}
 
 

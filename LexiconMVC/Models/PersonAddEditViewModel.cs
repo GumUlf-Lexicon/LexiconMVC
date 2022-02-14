@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +7,6 @@ namespace LexiconMVC.Models
 {
 	public class PersonAddEditViewModel
 	{
-
 		[DisplayName("Person ID")]
 		[Range(1, int.MaxValue)]
 		public int PersonId { get; set; }
@@ -27,19 +25,12 @@ namespace LexiconMVC.Models
 		public string PhoneNumber { get; set; }
 
 		[DisplayName("City")]
-		[Required(ErrorMessage = "Please enter a city")]
+		[Required(ErrorMessage = "Please enter a City")]
 		public int CityId { get; set; }
-		public List<SelectListItem> Cities { get; set; }
+		public List<CityViewModel> Cities { get; set; }
 
 		[DisplayName("Languages")]
-		public int[] LanguageIds { get; set; }
-		public List<SelectListItem> Languages { get; set; }
-
-		public string SiteTitle { get; set; }
-
-		public string SelectedAction { get; set; }
-
-		public string SubmitButtonText { get; set; }
-
+		public List<int> SelectedLanguageIds { get; set; }
+		public List<LanguageViewModel> Languages { get; set; }
 	}
 }

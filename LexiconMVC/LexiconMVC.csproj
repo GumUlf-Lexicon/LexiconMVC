@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="React\src\Person\App.jsx" />
-    <Content Include="React\src\Person\PersonItem.jsx" />
-    <Content Include="React\src\Person\PersonList.jsx" />
+    <Content Include="React\App.jsx" />
+    <Content Include="React\PersonItem.jsx" />
+    <Content Include="React\PersonList.jsx" />
   </ItemGroup>
 
   <ItemGroup>

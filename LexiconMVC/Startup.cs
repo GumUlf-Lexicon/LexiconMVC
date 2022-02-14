@@ -37,7 +37,7 @@ namespace LexiconMVC
 
 			_ = services.AddSession(options =>
 			  {
-				  options.IdleTimeout = TimeSpan.FromMinutes(15);
+				  options.IdleTimeout = TimeSpan.FromMinutes(60);
 				  options.Cookie.HttpOnly = true;
 				  options.Cookie.IsEssential = true;
 			  });
@@ -76,7 +76,7 @@ namespace LexiconMVC
 				options.Cookie.HttpOnly = true;
 				options.Cookie.IsEssential = true;
 				options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
-				options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+				options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
 				options.SlidingExpiration = true;
 
 			});
