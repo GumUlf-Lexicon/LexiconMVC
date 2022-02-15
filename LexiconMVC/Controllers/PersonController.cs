@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +15,6 @@ namespace LexiconMVC.Controllers
 	//[Authorize(Roles = "admin, user")]
 	public class PersonController: Controller
 	{
-
 		private readonly LexiconDbContext _lexiconDb;
 
 		public PersonController(LexiconDbContext lexiconDb)
@@ -31,17 +31,25 @@ namespace LexiconMVC.Controllers
 		[HttpGet]
 		public IActionResult GetPersons()
 		{
-			List<PersonMinimalViewModel> people = _lexiconDb.People
-				.Include(person => person.City)
-				.ThenInclude(c => c.Country)
-				.Select(p => new PersonMinimalViewModel
-				{
-					PersonId = p.PersonId,
-					Name = p.Name,
-					CityName = p.City.Name,
-					CountryName = p.City.Country.Name
-				})
-				.ToList();
+			List<PersonMinimalViewModel> people = null;
+			try
+			{
+				people = _lexiconDb.People
+					.Include(person => person.City)
+					.ThenInclude(c => c.Country)
+					.Select(p => new PersonMinimalViewModel
+					{
+						PersonId = p.PersonId,
+						Name = p.Name,
+						CityName = p.City.Name,
+						CountryName = p.City.Country.Name
+					})
+					.ToList();
+
+			} catch(Exception ex)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, ex.GetType().Name);
+			}
 
 			return Json(people);
 

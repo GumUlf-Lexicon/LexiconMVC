@@ -1,9 +1,10 @@
 ﻿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import BottomButton from './BottomButton';
 
 function PersonAdd(props) {
 
-	const [isNoPersonFound, setIsNoPersonFound] = useState(false);
+	const [noInfoReturned, setNoInfoReturned] = useState(false);
 	const [personInfo, setPersonInfo] = useState(false);
 	const [formValues, setFormValues] = useState({
 		"personName": "",
@@ -12,6 +13,7 @@ function PersonAdd(props) {
 		"languageIds": [],
 	});
 
+	// Get available languages and locations on mount
 	useEffect(() => {
 		let mounted = true;
 
@@ -26,7 +28,7 @@ function PersonAdd(props) {
 				}
 			} catch (error) {
 				if (error.response.status == 404) {
-					setIsNoPersonFound(true);
+					setNoInfoReturned(true);
 					return;
 				}
 				else {
@@ -53,6 +55,7 @@ function PersonAdd(props) {
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
 
+		// Multiple select values are stored differently 
 		if (target.type !== 'select-multiple') {
 			setFormValues(values => ({ ...values, [name]: value }));
 		}
@@ -66,10 +69,11 @@ function PersonAdd(props) {
 	}
 
 
-	if (isNoPersonFound) {
+	if (noInfoReturned) {
 		return (
 			<div>
-				Person not found!
+				Could not get location and language info!
+				<BottomButton handleOnClick={props.showPersonList} textValue="Show person list" />
 			</div>
 		);
 
@@ -82,18 +86,18 @@ function PersonAdd(props) {
 				<form onSubmit={handleSubmit} className="my-3">
 					<input name="personId" value={personInfo.personId} hidden readOnly />
 
-					<div className="">
-						<label className="form-label">Name: </label>
+					<div className="mb-3 mt-3">
+						<label htmlFor="personName" className="form-label">Name: </label>
 						<input name="personName" type="text" className="form-control" value={formValues.personName} onChange={handleChange} />
 					</div>
 
-					<div className="">
-						<label className="form-label">Phone number: </label>
+					<div className="mb-3">
+						<label htmlFor="phoneNumber" className="form-label">Phone number: </label>
 						<input name="phoneNumber" type="tel" className="form-control" value={formValues.phoneNumber} onChange={handleChange} />
 					</div>
 
-					<div className="">
-						<label className="form-label">City: </label>
+					<div className="mb-3">
+						<label htmlFor="cityId" className="form-label">City: </label>
 						<select name="cityId" className="form-select" size="1" value={formValues.cityId} onChange={handleChange}>
 							{personInfo.cities.map((city) => {
 								return <option value={city.cityId} key={city.cityId}>{city.name}, {city.countryName}</option>
@@ -101,8 +105,8 @@ function PersonAdd(props) {
 						</select>
 					</div>
 
-					<div className="">
-						<label className="form-label">Languages: </label>
+					<div className="mb-3">
+						<label htmlFor="languageIds" className="form-label">Languages: </label>
 						<select name="languageIds" className="form-select" size="5" multiple={true} value={formValues.languageIds} onChange={handleChange}>
 							{personInfo.languages.map((language) => {
 								return <option value={language.languageId} key={language.languageId}>{language.name}</option>
@@ -113,6 +117,7 @@ function PersonAdd(props) {
 						<button type="submit" className="btn btn-success">Create Person</button>
 					</div>
 				</form>
+				<BottomButton handleOnClick={props.showPersonList} textValue="Show person list" />
 			</div>
 		);
 
@@ -121,6 +126,7 @@ function PersonAdd(props) {
 		return (
 			<div className="text-center">
 				<div className="spinner-border"></div>
+				<BottomButton handleOnClick={props.showPersonList} textValue="Show person list" />
 			</div>
 		)
 	}

@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\items\" />
     <Folder Include="wwwroot\React\" />
   </ItemGroup>

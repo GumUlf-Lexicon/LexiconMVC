@@ -1,5 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import BottomButton from './BottomButton';
 
 function PersonInfo(props) {
 
@@ -40,6 +41,7 @@ function PersonInfo(props) {
 		return (
 			<div>
 				Person not found!
+				<BottomButton handleOnClick={props.showPersonList} textValue="Show person list" />
 			</div>
 		);
 
@@ -55,7 +57,7 @@ function PersonInfo(props) {
 						return <span key={index}> {(index ? ', ' : '') + lang.name}</span>
 					})
 				} <br />
-
+				<BottomButton handleOnClick={props.showPersonList} textValue="Show person list" />
 			</div>);
 
 	} else {
@@ -63,7 +65,9 @@ function PersonInfo(props) {
 		return (
 			<div className="text-center">
 				<div className="spinner-border"></div>
+				<BottomButton handleOnClick={props.showPersonList} textValue="Show person list" />
 			</div>
+
 		)
 	}
 }
