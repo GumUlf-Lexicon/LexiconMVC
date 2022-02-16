@@ -17,7 +17,6 @@ function PersonInfo(props) {
 				const person = await axios.post('Person/PostGetPersonById', props.personId);
 				if (mounted) {
 					setPersonInfo(person.data);
-					console.log(person.data);
 				}
 			} catch (error) {
 				if (error.response.status == 404) {
@@ -37,6 +36,10 @@ function PersonInfo(props) {
 	}, [])
 
 
+
+
+	/*      RENDERING BELOW      */
+
 	if (isNoPersonFound) {
 		return (
 			<div>
@@ -47,18 +50,33 @@ function PersonInfo(props) {
 
 	} else if (personInfo) {
 		return (
-			<div>
-				Name: {personInfo.name} <br />
-				Phone number: {personInfo.phoneNumber}<br />
-				Location: {personInfo.cityName}, {personInfo.countryName} <br />
-				Languages:
-				{
-					personInfo.languages.map((lang, index) => {
-						return <span key={index}> {(index ? ', ' : '') + lang.name}</span>
-					})
-				} <br />
+			<React.Fragment>
+				<div className="text-center row justify-content-center">
+					<div className="card border border-5 border-light bg-gradient rounded-3 bg-secondary w-50 ">
+							<h3 className="card-header bg-dark bg-gradient shadow-lg">{personInfo.name}</h3>
+						<div className="card-body">
+							<dl>
+								<dt>Phone number:</dt>
+								<dd>{personInfo.phoneNumber}</dd>
+								<dt> Location:</dt>
+								<dd>{personInfo.cityName}, {personInfo.countryName} </dd>
+								<dt>Languages:</dt>
+								<dd>	{
+									personInfo.languages.map((lang, index) => {
+										return <span key={index}> {(index ? ', ' : '') + lang.name}</span>
+									})
+								} </dd>
+							</dl>
+
+						</div>
+						<div className="card-footer">
+							<input type="button" className="btn btn-danger fw-bold"
+								onClick={(event) => { props.handleDeleteClick(event, personInfo.personId) }} value="Delete" />
+						</div>
+					</div>
+				</div>
 				<BottomButton handleOnClick={props.showPersonList} textValue="Show person list" />
-			</div>);
+			</React.Fragment>);
 
 	} else {
 

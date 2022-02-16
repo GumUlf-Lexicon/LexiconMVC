@@ -95,8 +95,7 @@ namespace LexiconMVC.Controllers
 
 		// Remove a specific person from the register
 		[HttpPost]
-		[Authorize(Roles = "admin")]
-		public IActionResult RemovePersonById(int personId)
+		public IActionResult RemovePersonById([FromBody] int personId)
 		{
 			PersonModel personToRemove =
 				(from person in _lexiconDb.People.ToList()
@@ -108,12 +107,12 @@ namespace LexiconMVC.Controllers
 				_ = _lexiconDb.People.Remove(personToRemove);
 				_lexiconDb.SaveChanges();
 				// The person was removed
-				return StatusCode(200);
+				return StatusCode(StatusCodes.Status200OK, "Person removed!");
 			}
 
 			// The person was not removed, the person probably
 			// was not in the register
-			return StatusCode(404);
+			return StatusCode(StatusCodes.Status404NotFound, "Person not found!");
 		}
 
 		[HttpPost]
@@ -158,7 +157,7 @@ namespace LexiconMVC.Controllers
 				PersonId = 0,
 				Name = "",
 				PhoneNumber = "",
-				SelectedLanguageIds = new List<int>(),
+				LanguageIds = new int[0] ,
 				Languages = GetLanguages(),
 				CityId = 0,
 				Cities = GetCities(),
@@ -168,8 +167,9 @@ namespace LexiconMVC.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult AddPerson([FromBody]PersonAddEditViewModel newPerson)
+		public IActionResult AddPerson([FromBody] PersonAddEditViewModel newPerson)
 		{
+
 			if(!ModelState.IsValid)
 			{
 				return StatusCode(StatusCodes.Status422UnprocessableEntity, "Person object not valid");
@@ -185,7 +185,7 @@ namespace LexiconMVC.Controllers
 			_lexiconDb.SaveChanges();
 
 
-			foreach(int langId in newPerson.SelectedLanguageIds)
+			foreach(int langId in newPerson.LanguageIds)
 			{
 				if(_lexiconDb.Languages.Where(language => language.LanguageId == langId).Count() == 1)
 				{
@@ -223,11 +223,11 @@ namespace LexiconMVC.Controllers
 				PhoneNumber = personToEdit.PhoneNumber,
 				CityId = personToEdit.CityId,
 
-				SelectedLanguageIds = _lexiconDb.PersonLanguages
+				LanguageIds = _lexiconDb.PersonLanguages
 				.Include(pl => pl.Language)
 				.Where(pl => pl.LanguageId == pl.Language.LanguageId && pl.PersonId == personId)
 				.Select(pl => pl.LanguageId)
-				.ToList(),
+				.ToArray(),
 
 				// Available cities and languages
 				Cities = GetCities(),
@@ -289,8 +289,8 @@ namespace LexiconMVC.Controllers
 				.ToList();
 
 			// Find out what languages to and and to remove
-			List<int> languagesToAdd = updatedPerson.SelectedLanguageIds.Except(personLanguages).ToList();
-			List<int> languagesToRemove = personLanguages.Except(updatedPerson.SelectedLanguageIds).ToList();
+			List<int> languagesToAdd = updatedPerson.LanguageIds.Except(personLanguages).ToList();
+			List<int> languagesToRemove = personLanguages.Except(updatedPerson.LanguageIds).ToList();
 
 			// Add new languages to the person, if the language is valid
 			foreach(int langId in languagesToAdd)

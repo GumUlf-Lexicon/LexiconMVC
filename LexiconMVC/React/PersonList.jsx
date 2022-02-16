@@ -5,6 +5,16 @@ import BottomButton from './BottomButton';
 
 function PersonList(props) {
 
+	let mounted = true;
+
+	useEffect(() => {
+		mounted = true;
+
+		return (() => mounted = false)
+
+	}, [])
+
+
 	// Loading stats used for display the right information
 	const [isLoading, setIsLoading] = useState(true);
 	const [hasLoadingFailed, setHasLoadingFailed] = useState(false);
@@ -21,7 +31,6 @@ function PersonList(props) {
 	// Load data from server
 	useEffect(() => {
 		setIsLoading(true);
-		let mounted = true;
 		const getPersons = async () => {
 			try {
 				const response = await axios.get("/Person/GetPersons");
@@ -43,9 +52,6 @@ function PersonList(props) {
 		}
 
 		getPersons();
-
-		return () => { mounted = false; };
-
 	}, [loadingTryNumber])
 
 	// Trigger reload from server
@@ -64,16 +70,17 @@ function PersonList(props) {
 	}
 
 
-	const handleDeleteClick = (event, personId) => {
+	const handleDeleteClick = async (event, personId) => {
 		event.preventDefault();
 		event.stopPropagation();
-		console.log(`Deleting person with ID: ${personId}`);
+		props.handleDeleteClick(event, personId);
+		handleRetryClick();
 	}
 
 	const handleInfoClick = (event, personId) => {
 		event.preventDefault();
 		event.stopPropagation();
-		props.showInfo(personId);
+		props.showPersonInfo(personId);
 	}
 
 	const handleSortClick = (event) => {

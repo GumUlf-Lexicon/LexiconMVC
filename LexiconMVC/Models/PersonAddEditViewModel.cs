@@ -8,7 +8,7 @@ namespace LexiconMVC.Models
 	public class PersonAddEditViewModel
 	{
 		[DisplayName("Person ID")]
-		[Range(1, int.MaxValue)]
+		[Range(0, int.MaxValue)]
 		public int PersonId { get; set; }
 
 		[DisplayName("Name")]
@@ -30,7 +30,7 @@ namespace LexiconMVC.Models
 		public List<CityViewModel> Cities { get; set; }
 
 		[DisplayName("Languages")]
-		public List<int> SelectedLanguageIds { get; set; }
+		public int[] LanguageIds { get; set; }
 		public List<LanguageViewModel> Languages { get; set; }
 	}
 }
