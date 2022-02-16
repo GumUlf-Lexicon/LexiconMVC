@@ -59,22 +59,24 @@ function PersonAdd(props) {
 	const handleSubmit = async (event) => {
 
 		event.preventDefault();
+
+		// Activate the validation messages in case there are invalid values
 		setIsValidating(true);
 
 		const currentValues = formValues;
 		const allValuesValid = validateInputs(currentValues);
 
 		if (!allValuesValid) {
-			setIsValidating(true);
+			// Do not allow submit of new person
 			return;
 		}
 
-		const cityId = parseInt(formValues.cityId);
+		// Values are OK, let's add the new person
 
 		const newPerson = {
 			name: formValues.personName,
 			phoneNumber: formValues.phoneNumber,
-			cityId: (cityId < 0 ? 0 : cityId),
+			cityId: parseInt(formValues.cityId),
 			languageIds: formValues.languageIds.map(id => {
 				if (id == "") return;
 				return parseInt(id);
@@ -85,6 +87,7 @@ function PersonAdd(props) {
 			await axios.post('Person/AddPerson', newPerson);
 
 			if (mounted) {
+				// Everything went well. Do cleanup
 				setFormValues({
 					"personName": "",
 					"phoneNumber": "",
@@ -109,11 +112,12 @@ function PersonAdd(props) {
 		}
 	}
 
+	// Handle values for active control of form
 	const handleChange = (event) => {
+
 		const target = event.target;
 		const value = target.value;
 		const name = target.name;
-
 
 		// Multiple select values are stored differently 
 		if (target.type !== 'select-multiple') {
@@ -128,6 +132,7 @@ function PersonAdd(props) {
 		}
 	}
 
+	// Do validation, if wanted
 	useEffect(() => {
 
 		if (isValidating) {
@@ -144,13 +149,14 @@ function PersonAdd(props) {
 
 	}, [formValues, isValidating])
 
-
+	// Check that all values in the form are valid
 	const validateInputs = (valuesToValidate) => {
 
 
 		const validateName = (personName) => {
 
-			const pattern = /\S{3,128}/;
+			// At least 3 and at most 128 characters
+			const pattern = /.{3,128}/;
 			const isValid = pattern.test(personName);
 
 			setValidationStatus(values => {
@@ -161,7 +167,7 @@ function PersonAdd(props) {
 		};
 
 		const validatePhoneNumber = (phoneNumber) => {
-
+			// At least 3 and at most 32 digits and other characters valid in phone numbers
 			const pattern = /^[0-9 \-\+\(\)]{3,32}$/;
 			const isValid = pattern.test(phoneNumber);
 
@@ -173,9 +179,10 @@ function PersonAdd(props) {
 		};
 
 		const validateCityId = (cityId) => {
-
-			const parsedValue = parseInt(cityId);
-			const isValid = (!isNaN(parsedValue) && parsedValue > 0);
+			// Needs to be a number over 0. (More advanced would be to 
+			// check against the values in the city list)
+			const parsedCityId = parseInt(cityId);
+			const isValid = (!isNaN(parsedCityId) && parsedCityId > 0);
 
 			setValidationStatus(values => {
 				return { ...values, cityId: (isValid ? 'is-valid' : 'is-invalid') };

@@ -5,30 +5,22 @@ import PersonAdd from './PersonAdd';
 
 function App(props) {
 
+	// To keep track of what should we show to the user at the moment
 	const [personSubPage, setPersonSubPage] = useState();
 
+	// Detailed information about a person
 	const showPersonInfo = (personId) =>
-		setPersonSubPage(<PersonInfo personId={personId} showPersonList={showPersonList} handleDeleteClick={handleDeleteClick} />);
+		setPersonSubPage(<PersonInfo personId={personId} showPersonList={showPersonList} />);
 
+	// Add a new person to the list
 	const addPerson = () =>
 		setPersonSubPage(<PersonAdd showPersonList={showPersonList} />);
 
+	// Show a simple list of the persons
 	const showPersonList = () =>
-		setPersonSubPage(<PersonList showPersonInfo={showPersonInfo} addPerson={addPerson} handleDeleteClick={handleDeleteClick} />);
+		setPersonSubPage(<PersonList showPersonInfo={showPersonInfo} addPerson={addPerson} />);
 
-	const handleDeleteClick = async (event, personId) => {
-		event.preventDefault();
-		axios.defaults.headers.post['Content-Type'] = 'application/json';
-		axios.defaults.baseURL = `${location.origin}/`;
-		try {
-			await axios.post('Person/RemovePersonById', personId);
-			showPersonList();
-		}
-		catch (error) {
-			console.error("Error deleting user!", error)
-		}
-	}
-
+	// To select the startup view with the person list
 	useEffect(() => { showPersonList() }, []);
 
 	return (

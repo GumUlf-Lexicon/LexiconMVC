@@ -8,9 +8,6 @@ function getAllCities() {
 		$("#CityList").html(data);
 	});
 
-	// Clear ID-box value
-	document.getElementById('cityIdInput').value = '';
-
 	// Only clear the UserMessages if not just set by another calling function
 	if (clearUserMessages) {
 		document.getElementById('userMessages').innerText = '';

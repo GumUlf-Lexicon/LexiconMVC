@@ -69,20 +69,34 @@ function PersonList(props) {
 		return 0;
 	}
 
-
+	// Delete a person
 	const handleDeleteClick = async (event, personId) => {
 		event.preventDefault();
 		event.stopPropagation();
-		props.handleDeleteClick(event, personId);
-		handleRetryClick();
+
+		axios.defaults.headers.post['Content-Type'] = 'application/json';
+		axios.defaults.baseURL = `${location.origin}/`;
+		try {
+			await axios.post('Person/RemovePersonById', personId);
+			console.log(`Deleted person with ID: ${personId}`);
+			if (mounted) {
+				setPersonList(personList.filter((person => person.personId !== personId)));
+			}
+		}
+		catch (error) {
+			console.error("Error deleting user!", error)
+		}
+
 	}
 
+	// Get detailed information about a person
 	const handleInfoClick = (event, personId) => {
 		event.preventDefault();
 		event.stopPropagation();
 		props.showPersonInfo(personId);
 	}
 
+	// Change the sorting order of the list
 	const handleSortClick = (event) => {
 		let list = [];
 		switch (event.target.attributes.name.nodeValue) {

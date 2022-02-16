@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace LexiconMVC.Controllers
 {
-	[AllowAnonymous]
-	//[Authorize(Roles = "admin, user")]
+	
+	[Authorize(Roles = "admin, user")]
 	public class PersonController: Controller
 	{
 		private readonly LexiconDbContext _lexiconDb;

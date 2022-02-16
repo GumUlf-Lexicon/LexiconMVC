@@ -8,9 +8,6 @@ function getAllLanguages() {
 		$("#LanguageList").html(data);
 	});
 
-	// Clear ID-box value
-	document.getElementById('languageIdInput').value = '';
-
 	// Only clear the UserMessages if not just set by another calling function
 	if (clearUserMessages) {
 		document.getElementById('userMessages').innerText = '';
